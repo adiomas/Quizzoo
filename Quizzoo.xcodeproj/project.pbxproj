@@ -3,27 +3,38 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		875DE2E724683C1E00E05641 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 875DE2E624683C1E00E05641 /* Kingfisher */; };
+		875DE2E92468596B00E05641 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875DE2E82468596B00E05641 /* LoginViewController.swift */; };
+		875DE2F1246885D600E05641 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875DE2F0246885D600E05641 /* LoginService.swift */; };
 		87B52A4D24674E980081BD70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A4C24674E980081BD70 /* AppDelegate.swift */; };
 		87B52A4F24674E980081BD70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A4E24674E980081BD70 /* SceneDelegate.swift */; };
 		87B52A5124674E980081BD70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A5024674E980081BD70 /* ViewController.swift */; };
-		87B52A5424674E980081BD70 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B52A5224674E980081BD70 /* Main.storyboard */; };
 		87B52A5624674E9B0081BD70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87B52A5524674E9B0081BD70 /* Assets.xcassets */; };
 		87B52A5924674E9B0081BD70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B52A5724674E9B0081BD70 /* LaunchScreen.storyboard */; };
+		87B52A6224675E920081BD70 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A6124675E910081BD70 /* QuestionView.swift */; };
+		87B52A64246764CE0081BD70 /* QuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A63246764CE0081BD70 /* QuizService.swift */; };
+		B52EA21FD1064D9526432322 /* Pods_Quizzoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7890FCA626BE418F832E22D9 /* Pods_Quizzoo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7890FCA626BE418F832E22D9 /* Pods_Quizzoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizzoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		875DE2E82468596B00E05641 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		875DE2F0246885D600E05641 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		87B52A4924674E980081BD70 /* Quizzoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizzoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B52A4C24674E980081BD70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B52A4E24674E980081BD70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		87B52A5024674E980081BD70 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		87B52A5324674E980081BD70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		87B52A5524674E9B0081BD70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87B52A5824674E9B0081BD70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87B52A5A24674E9B0081BD70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87B52A6124675E910081BD70 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		87B52A63246764CE0081BD70 /* QuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizService.swift; sourceTree = "<group>"; };
+		A8102DC4D3938DDBBC143FD4 /* Pods-Quizzoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizzoo.debug.xcconfig"; path = "Target Support Files/Pods-Quizzoo/Pods-Quizzoo.debug.xcconfig"; sourceTree = "<group>"; };
+		FE13E2A6EEE57DA297C832C0 /* Pods-Quizzoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizzoo.release.xcconfig"; path = "Target Support Files/Pods-Quizzoo/Pods-Quizzoo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +42,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				875DE2E724683C1E00E05641 /* Kingfisher in Frameworks */,
+				B52EA21FD1064D9526432322 /* Pods_Quizzoo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F14D4919B2999C3962CCE40 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7890FCA626BE418F832E22D9 /* Pods_Quizzoo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		875DE2EF2468853300E05641 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				87B52A63246764CE0081BD70 /* QuizService.swift */,
+				875DE2F0246885D600E05641 /* LoginService.swift */,
+				87B52A6024675E100081BD70 /* CustomViews */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		87B52A4024674E980081BD70 = {
 			isa = PBXGroup;
 			children = (
 				87B52A4B24674E980081BD70 /* Quizzoo */,
 				87B52A4A24674E980081BD70 /* Products */,
+				FFFEDC88436869B61A156486 /* Pods */,
+				2F14D4919B2999C3962CCE40 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +89,33 @@
 		87B52A4B24674E980081BD70 /* Quizzoo */ = {
 			isa = PBXGroup;
 			children = (
+				875DE2EF2468853300E05641 /* Service */,
 				87B52A4C24674E980081BD70 /* AppDelegate.swift */,
 				87B52A4E24674E980081BD70 /* SceneDelegate.swift */,
 				87B52A5024674E980081BD70 /* ViewController.swift */,
-				87B52A5224674E980081BD70 /* Main.storyboard */,
 				87B52A5524674E9B0081BD70 /* Assets.xcassets */,
 				87B52A5724674E9B0081BD70 /* LaunchScreen.storyboard */,
 				87B52A5A24674E9B0081BD70 /* Info.plist */,
+				875DE2E82468596B00E05641 /* LoginViewController.swift */,
 			);
 			path = Quizzoo;
+			sourceTree = "<group>";
+		};
+		87B52A6024675E100081BD70 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				87B52A6124675E910081BD70 /* QuestionView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		FFFEDC88436869B61A156486 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A8102DC4D3938DDBBC143FD4 /* Pods-Quizzoo.debug.xcconfig */,
+				FE13E2A6EEE57DA297C832C0 /* Pods-Quizzoo.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,15 +125,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87B52A5D24674E9B0081BD70 /* Build configuration list for PBXNativeTarget "Quizzoo" */;
 			buildPhases = (
+				38BC75E564E9C27FA33567A4 /* [CP] Check Pods Manifest.lock */,
 				87B52A4524674E980081BD70 /* Sources */,
 				87B52A4624674E980081BD70 /* Frameworks */,
 				87B52A4724674E980081BD70 /* Resources */,
+				6012BEC6CF3F41A3F81744B6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Quizzoo;
+			packageProductDependencies = (
+				875DE2E624683C1E00E05641 /* Kingfisher */,
+			);
 			productName = Quizzoo;
 			productReference = 87B52A4924674E980081BD70 /* Quizzoo.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +167,9 @@
 				Base,
 			);
 			mainGroup = 87B52A4024674E980081BD70;
+			packageReferences = (
+				875DE2E524683C1E00E05641 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 87B52A4A24674E980081BD70 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,34 +186,71 @@
 			files = (
 				87B52A5924674E9B0081BD70 /* LaunchScreen.storyboard in Resources */,
 				87B52A5624674E9B0081BD70 /* Assets.xcassets in Resources */,
-				87B52A5424674E980081BD70 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		38BC75E564E9C27FA33567A4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Quizzoo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6012BEC6CF3F41A3F81744B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizzoo/Pods-Quizzoo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Quizzoo/Pods-Quizzoo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Quizzoo/Pods-Quizzoo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		87B52A4524674E980081BD70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				875DE2E92468596B00E05641 /* LoginViewController.swift in Sources */,
+				87B52A6224675E920081BD70 /* QuestionView.swift in Sources */,
 				87B52A5124674E980081BD70 /* ViewController.swift in Sources */,
+				87B52A64246764CE0081BD70 /* QuizService.swift in Sources */,
 				87B52A4D24674E980081BD70 /* AppDelegate.swift in Sources */,
 				87B52A4F24674E980081BD70 /* SceneDelegate.swift in Sources */,
+				875DE2F1246885D600E05641 /* LoginService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		87B52A5224674E980081BD70 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				87B52A5324674E980081BD70 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		87B52A5724674E9B0081BD70 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -282,6 +378,7 @@
 		};
 		87B52A5E24674E9B0081BD70 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8102DC4D3938DDBBC143FD4 /* Pods-Quizzoo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +397,7 @@
 		};
 		87B52A5F24674E9B0081BD70 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE13E2A6EEE57DA297C832C0 /* Pods-Quizzoo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -338,6 +436,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		875DE2E524683C1E00E05641 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		875DE2E624683C1E00E05641 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 875DE2E524683C1E00E05641 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 87B52A4124674E980081BD70 /* Project object */;
 }
