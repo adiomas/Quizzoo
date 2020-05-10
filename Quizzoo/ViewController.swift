@@ -151,8 +151,10 @@ class ViewController: UIViewController {
         
         guard let responseModel = responseModel else {
             DispatchQueue.main.sync {
-                errorLabel.text = "POGREŠKA"
-                errorLabel.isHidden = false
+               let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(ok)
+                present(alert,animated: true,completion:nil)
             }
             
             return

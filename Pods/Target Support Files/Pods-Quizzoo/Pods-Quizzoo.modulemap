@@ -1,0 +1,6 @@
+framework module Pods_Quizzoo {
+  umbrella header "Pods-Quizzoo-umbrella.h"
+
+  export *
+  module * { export * }
+}
