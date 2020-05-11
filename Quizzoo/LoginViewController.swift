@@ -55,6 +55,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let color = UIColor.black
         
         usernameTextField = UITextField()
+        usernameTextField.autocapitalizationType = .none
+        usernameTextField.clearButtonMode = .whileEditing
+        usernameTextField.autocorrectionType = .no
         usernameTextField.autoSetDimensions(to:.init(width: 300, height: 35))
         usernameTextField.placeholder = "Username"
         usernameTextField.layer.borderColor = color.cgColor
@@ -62,6 +65,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         view.addSubview(usernameTextField)
         
         passwordTextField = UITextField()
+        passwordTextField.autocapitalizationType = .none
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.clearButtonMode = .whileEditing
         passwordTextField.placeholder = "Password"
         passwordTextField.autoSetDimensions(to:.init(width: 300, height: 35))
         passwordTextField.layer.borderColor = color.cgColor
@@ -130,7 +136,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             UserDefaults.standard.set(token, forKey: "accessToken")
             print("USPJESNO")
             print(token)
-            self.navigationController?.pushViewController(ViewController(), animated: true)
+            let vc = ViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         
         

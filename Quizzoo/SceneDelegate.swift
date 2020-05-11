@@ -21,22 +21,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        check()
+        self.window?.rootViewController = createRootController()
+        self.window?.makeKeyAndVisible()
         
              
     }
     
-    func check() {
+    func createRootController() -> UINavigationController {
         if UserDefaults.standard.value(forKey: "accessToken") != nil {
             let controller = ViewController()
             let navigationController = UINavigationController(rootViewController: controller)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
+            return navigationController
         } else {
             let controller =  LoginViewController()
             let navigationController = UINavigationController(rootViewController: controller)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
+            return navigationController
         }
     }
 
