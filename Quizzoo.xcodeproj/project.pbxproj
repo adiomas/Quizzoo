@@ -63,7 +63,6 @@
 			children = (
 				87B52A63246764CE0081BD70 /* QuizService.swift */,
 				875DE2F0246885D600E05641 /* LoginService.swift */,
-				87B52A6024675E100081BD70 /* CustomViews */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -89,6 +88,7 @@
 		87B52A4B24674E980081BD70 /* Quizzoo */ = {
 			isa = PBXGroup;
 			children = (
+				87B52A6024675E100081BD70 /* CustomViews */,
 				875DE2EF2468853300E05641 /* Service */,
 				87B52A4C24674E980081BD70 /* AppDelegate.swift */,
 				87B52A4E24674E980081BD70 /* SceneDelegate.swift */,

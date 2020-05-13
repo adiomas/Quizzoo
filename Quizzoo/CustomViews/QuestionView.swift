@@ -10,7 +10,6 @@ import UIKit
 
 class QuestionView: UIView {
     
-    
     var questionLabel : UILabel!
     
     var answer1Button : UIButton!
@@ -84,14 +83,8 @@ class QuestionView: UIView {
     
     @objc
     func checkAnswer(_ sender: UIButton){
-//        self.questionModel = QuestionModel
-//        for i in 0..<questionModel?.answers.count{
-//
-//        }
-        
         if questionModel?.correct_answer == sender.tag {
             sender.backgroundColor = .green
-            
         }
         else{
             sender.backgroundColor = .red
@@ -101,22 +94,17 @@ class QuestionView: UIView {
     func makeConstraints(){
         questionLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         questionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-         questionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        questionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
-    
         answersStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         answersStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         answersStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        answersStackView.autoPinEdge(.top, to: .bottom
-            , of: questionLabel, withOffset: 10)
-        
-       
+        answersStackView.autoPinEdge(.top, to: .bottom, of: questionLabel, withOffset: 10)
     }
     
     func setQuestion(questionModel: QuestionModel) {
         self.questionModel = questionModel
         self.questionLabel.text = questionModel.question
-        
         
         for i in 0..<questionModel.answers.count {
             switch i {
@@ -129,7 +117,7 @@ class QuestionView: UIView {
             case 3:
                 answer4Button.setTitle(questionModel.answers[i], for: .normal)
             default:
-                print("OVO NEBI trebalo biti")
+                print("NEBI SE TREBALO DESITI!")
             }
         }
     }

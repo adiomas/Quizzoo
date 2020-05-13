@@ -25,15 +25,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     private let loginService = LoginService()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         buildViews()
         createConstraints()
-        
         textFields.forEach { $0.delegate = self }
-        
         view.backgroundColor = .white
     }
     
@@ -46,7 +42,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     func buildViews() {
-        
         quizNameLabel = UILabel()
         quizNameLabel.text = "QUIZZOO"
         quizNameLabel.textAlignment = .center
@@ -58,7 +53,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         usernameTextField.autocapitalizationType = .none
         usernameTextField.clearButtonMode = .whileEditing
         usernameTextField.autocorrectionType = .no
-        usernameTextField.autoSetDimensions(to:.init(width: 300, height: 35))
+        usernameTextField.autoSetDimensions(to: .init(width: 300, height: 35))
         usernameTextField.placeholder = "Username"
         usernameTextField.layer.borderColor = color.cgColor
         usernameTextField.borderStyle = UITextField.BorderStyle.roundedRect
@@ -69,7 +64,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         passwordTextField.autocorrectionType = .no
         passwordTextField.clearButtonMode = .whileEditing
         passwordTextField.placeholder = "Password"
-        passwordTextField.autoSetDimensions(to:.init(width: 300, height: 35))
+        passwordTextField.autoSetDimensions(to: .init(width: 300, height: 35))
         passwordTextField.layer.borderColor = color.cgColor
         passwordTextField.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(passwordTextField)
@@ -92,11 +87,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         usernameTextField.autoPinEdge(.top, to: .bottom, of: quizNameLabel, withOffset: 40)
         usernameTextField.autoAlignAxis(.vertical, toSameAxisOf: quizNameLabel)
         
-        
         passwordTextField.autoPinEdge(.top, to: .bottom, of: usernameTextField, withOffset: 20)
         passwordTextField.autoAlignAxis(.vertical, toSameAxisOf: usernameTextField)
-        
-        
         
         loginButton.autoPinEdge(.top, to: .bottom, of: passwordTextField, withOffset: 30)
         loginButton.autoAlignAxis(.vertical, toSameAxisOf: passwordTextField)
@@ -107,7 +99,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         if let selectedTextFieldIndex = textFields.firstIndex(of: textField), selectedTextFieldIndex < textFields.count - 1 {
             textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
         } else {
-            textField.resignFirstResponder() // last textfield, dismiss keyboard directly
+            textField.resignFirstResponder()
         }
         return true
     }
@@ -116,7 +108,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let username = usernameTextField.text
         let password = passwordTextField.text
         
-        loginService.doLogin(username!,password!,completionHandler:checkToken(token:))
+        loginService.doLogin(username!,password!,completionHandler: checkToken(token:))
         
     }
     
@@ -127,7 +119,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(ok)
                 present(alert,animated: true,completion:nil)
-                
             }
             return
         }

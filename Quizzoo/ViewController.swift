@@ -14,48 +14,41 @@ import Kingfisher
 class ViewController: UIViewController {
     
     var getQuizzesButtton: UIButton!
+    
     var funFactLabel: UILabel!
     
     var numberLabel: UILabel!
     
-    var quizNameLabel : UILabel!    
+    var quizNameLabel: UILabel!
     
-    var errorLabel : UILabel!
+    var errorLabel: UILabel!
     
-    var image : UIImageView!
+    var image: UIImageView!
     
-    var questionView : QuestionView!
+    var questionView: QuestionView!
     
-    var logoutButton : UIButton!
+    var logoutButton: UIButton!
     
-    var categoryButtons : UIStackView!
+    var categoryButtons: UIStackView!
     
-    var categoryButton1 : UIButton!
+    var categoryButton1: UIButton!
     
     var categoryButton2: UIButton!
     
-    var check: Int = 5
-    
+
     private let networkService = QuizService()
     
     private var quizzes: [QuizModel]?
     
-    
-    
     var answerButtons : [UIButton] {
-        return [questionView.answer1Button,questionView.answer2Button,questionView.answer3Button,questionView.answer4Button]
+        return [questionView.answer1Button, questionView.answer2Button, questionView.answer3Button, questionView.answer4Button]
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         buildViews()
         createConstraints()
-       
-        // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,9 +59,7 @@ class ViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    
     func buildViews() {
-        
         getQuizzesButtton = UIButton()
         getQuizzesButtton.setTitle("GET QUIZZES", for: .normal)
         getQuizzesButtton.setTitleColor(.blue, for: .normal)
@@ -147,13 +138,10 @@ class ViewController: UIViewController {
         categoryButton2.tag = 1
         categoryButton2.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
         categoryButtons.addArrangedSubview(categoryButton2)
-        
-        
     }
     
     
     func createConstraints() {
-        
         logoutButton.autoPinEdge(toSuperviewEdge: .top, withInset: 35)
         logoutButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
@@ -170,8 +158,6 @@ class ViewController: UIViewController {
         categoryButtons.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
         categoryButtons.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
         
-        
-        
         quizNameLabel.autoPinEdge(.top, to: .bottom, of: categoryButtons, withOffset: 10)
         quizNameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         quizNameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
@@ -180,7 +166,6 @@ class ViewController: UIViewController {
         image.autoAlignAxis(.vertical, toSameAxisOf: quizNameLabel)
         image.autoSetDimensions(to: CGSize(width: 100, height: 100))
         
-        
         questionView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         questionView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         questionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
@@ -188,20 +173,10 @@ class ViewController: UIViewController {
         
         errorLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 20)
         errorLabel.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     @objc func getQuizzes() {
         networkService.getQuizzes(completionHandler: saveQuizzes(responseModel:))
-        
-        
     }
     
     @objc func logout() {
@@ -210,7 +185,6 @@ class ViewController: UIViewController {
     }
     
     func saveQuizzes(responseModel : ResponseModel?) {
-        
         guard let responseModel = responseModel else {
             DispatchQueue.main.sync {
                 let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
@@ -218,12 +192,9 @@ class ViewController: UIViewController {
                 alert.addAction(ok)
                 present(alert,animated: true,completion:nil)
             }
-            
             return
         }
-        
-        
-        
+    
         self.quizzes = responseModel.quizzes
         
         let ffNumber = responseModel.quizzes
@@ -244,12 +215,8 @@ class ViewController: UIViewController {
             numberLabel.isHidden = false
             numberLabel.text = String(ffNumber)
             logoutButton.isHidden = false
-            
-
         }
     }
-    
-            
     
     @objc func chooseCategory(_ sender: UIButton) {
         if sender.tag == 0 {
@@ -257,7 +224,7 @@ class ViewController: UIViewController {
             image.isHidden = false
             questionView.isHidden = false
             quizNameLabel.text = quizzes![sender.tag].title
-                    
+            
             guard let imageURL = URL(string: (quizzes?[sender.tag].image)!) else {return}
             image.kf.setImage(with:imageURL)
             questionView.setQuestion(questionModel: quizzes![sender.tag].questions[0])
@@ -268,13 +235,13 @@ class ViewController: UIViewController {
             image.isHidden = false
             questionView.isHidden = false
             quizNameLabel.text = quizzes![sender.tag].title
-                    
+            
             guard let imageURL = URL(string: (quizzes?[sender.tag].image)!) else {return}
             image.kf.setImage(with:imageURL)
             questionView.setQuestion(questionModel: quizzes![sender.tag].questions[0])
             answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)}
         }
- }
-  
+    }
+    
 }
 

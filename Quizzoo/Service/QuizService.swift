@@ -16,7 +16,7 @@ class QuizService {
     private let jsonDecoder = JSONDecoder()
     
     func getQuizzes(completionHandler: @escaping (ResponseModel?) -> Void){
-        guard let url = URL(string: apiString) else {return}
+        guard let url = URL(string: apiString) else { return }
         
         let task = session.dataTask(with: url) { (data, _ , error) in
             if error != nil {
@@ -27,22 +27,17 @@ class QuizService {
             guard let jsonData = data else { return }
             
             do {
-                 let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)
-                 completionHandler(response)
-                
-                
+                let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)
+                completionHandler(response)
             } catch {
                 print("POGREKA")
                 completionHandler(nil)
                 return
             }
-           
+            
         }
         task.resume()
     }
-    
-    
-    
 }
 
 struct QuizModel: Codable {
