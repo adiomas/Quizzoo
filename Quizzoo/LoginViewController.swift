@@ -35,6 +35,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden  = true
+        usernameTextField.text = ""
+        passwordTextField.text = ""
+        usernameTextField.becomeFirstResponder()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,6 +67,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         passwordTextField.autocorrectionType = .no
         passwordTextField.clearButtonMode = .whileEditing
         passwordTextField.placeholder = "Password"
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.autoSetDimensions(to: .init(width: 300, height: 35))
         passwordTextField.layer.borderColor = color.cgColor
         passwordTextField.borderStyle = UITextField.BorderStyle.roundedRect

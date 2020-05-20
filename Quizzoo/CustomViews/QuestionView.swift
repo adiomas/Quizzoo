@@ -45,40 +45,32 @@ class QuestionView: UIView {
         addSubview(answersStackView)
         
         answer1Button = UIButton()
-        answer1Button.setTitle("A1", for: .normal)
-        answer1Button.setTitleColor(.black, for: .normal)
-        answer1Button.layer.cornerRadius = 5
-        answer1Button.layer.borderWidth = 1
         answer1Button.tag = 0
-        answer1Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
+        buttonsInit(button: answer1Button)
         answersStackView.addArrangedSubview(answer1Button)
         
         answer2Button = UIButton()
-        answer2Button.setTitle("A1", for: .normal)
-        answer2Button.setTitleColor(.black, for: .normal)
-        answer2Button.layer.cornerRadius = 5
-        answer2Button.layer.borderWidth = 1
         answer2Button.tag = 1
-        answer2Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
+        buttonsInit(button: answer2Button)
         answersStackView.addArrangedSubview(answer2Button)
         
         answer3Button = UIButton()
-        answer3Button.setTitle("A1", for: .normal)
-        answer3Button.setTitleColor(.black, for: .normal)
-        answer3Button.layer.cornerRadius = 5
-        answer3Button.layer.borderWidth = 1
         answer3Button.tag = 2
-        answer3Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
+        buttonsInit(button: answer3Button)
         answersStackView.addArrangedSubview(answer3Button)
         
         answer4Button = UIButton()
-        answer4Button.setTitle("A1", for: .normal)
-        answer4Button.setTitleColor(.black, for: .normal)
-        answer4Button.layer.cornerRadius = 5
-        answer4Button.layer.borderWidth = 1
         answer4Button.tag = 3
-        answer4Button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
+        buttonsInit(button: answer4Button)
         answersStackView.addArrangedSubview(answer4Button)
+    }
+    
+    func buttonsInit(button: UIButton) {
+        button.setTitle("A1", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
     }
     
     @objc

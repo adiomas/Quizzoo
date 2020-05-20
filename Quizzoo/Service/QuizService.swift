@@ -24,7 +24,10 @@ class QuizService {
                 completionHandler(nil)
                 return
             }
-            guard let jsonData = data else { return }
+            guard let jsonData = data else {
+                completionHandler(nil)
+                return
+            }
             
             do {
                 let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)

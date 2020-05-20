@@ -110,34 +110,29 @@ class ViewController: UIViewController {
         view.addSubview(categoryButtons)
         
         categoryButton1 = UIButton()
-        categoryButton1.autoSetDimensions(to: .init(width: 200, height: 70))
-        categoryButton1.titleLabel?.textAlignment = .center
-        categoryButton1.titleLabel?.adjustsFontSizeToFitWidth = true
-        categoryButton1.titleLabel?.numberOfLines = 2
-        categoryButton1.titleLabel?.minimumScaleFactor = 0.1
-        categoryButton1.clipsToBounds = true
-        categoryButton1.isHidden = true
-        categoryButton1.layer.cornerRadius = 5
-        categoryButton1.layer.borderWidth = 1
+        categoryButtonsInit(button: categoryButton1)
         categoryButton1.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)
         categoryButton1.tag = 0
-        categoryButton1.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
         categoryButtons.addArrangedSubview(categoryButton1)
         
         categoryButton2 = UIButton()
-        categoryButton2.autoSetDimensions(to: .init(width: 200, height: 70))
-        categoryButton2.titleLabel?.textAlignment = .center
-        categoryButton2.titleLabel?.adjustsFontSizeToFitWidth = true
-        categoryButton2.titleLabel?.numberOfLines = 2
-        categoryButton2.titleLabel?.minimumScaleFactor = 0.1
-        categoryButton2.clipsToBounds = true
-        categoryButton2.isHidden = true
-        categoryButton2.layer.cornerRadius = 5
-        categoryButton2.layer.borderWidth = 1
+        categoryButtonsInit(button: categoryButton2)
         categoryButton2.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
         categoryButton2.tag = 1
-        categoryButton2.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
         categoryButtons.addArrangedSubview(categoryButton2)
+    }
+    
+    func categoryButtonsInit(button : UIButton) {
+        button.autoSetDimensions(to: .init(width: 200, height: 70))
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.minimumScaleFactor = 0.1
+        button.clipsToBounds = true
+        button.isHidden = true
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
     }
     
     
@@ -157,6 +152,7 @@ class ViewController: UIViewController {
         
         categoryButtons.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
         categoryButtons.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
+       
         
         quizNameLabel.autoPinEdge(.top, to: .bottom, of: categoryButtons, withOffset: 10)
         quizNameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
@@ -198,13 +194,13 @@ class ViewController: UIViewController {
         self.quizzes = responseModel.quizzes
         
         let ffNumber = responseModel.quizzes
-            .map({$0.questions})
-            .flatMap({$0.map({$0.question})})
+            .map{$0.questions}
+            .flatMap{$0.map{$0.question}}
             .filter { (question) -> Bool in
                 return question.contains("NBA")
         }
         .count
-        
+            
         DispatchQueue.main.sync {
             categoryButton1.setTitle(responseModel.quizzes[0].title, for: .normal)
             categoryButton2.setTitle(responseModel.quizzes[1].title, for: .normal)
@@ -220,27 +216,24 @@ class ViewController: UIViewController {
     
     @objc func chooseCategory(_ sender: UIButton) {
         if sender.tag == 0 {
-            quizNameLabel.isHidden = false
-            image.isHidden = false
-            questionView.isHidden = false
-            quizNameLabel.text = quizzes![sender.tag].title
-            
-            guard let imageURL = URL(string: (quizzes?[sender.tag].image)!) else {return}
-            image.kf.setImage(with:imageURL)
-            questionView.setQuestion(questionModel: quizzes![sender.tag].questions[0])
+            categoryButtonsShow(sender: sender.tag)
             answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)}
             
         }else {
-            quizNameLabel.isHidden = false
-            image.isHidden = false
-            questionView.isHidden = false
-            quizNameLabel.text = quizzes![sender.tag].title
-            
-            guard let imageURL = URL(string: (quizzes?[sender.tag].image)!) else {return}
-            image.kf.setImage(with:imageURL)
-            questionView.setQuestion(questionModel: quizzes![sender.tag].questions[0])
+            categoryButtonsShow(sender: sender.tag)
             answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)}
         }
+    }
+    
+    func categoryButtonsShow(sender : Int) {
+        quizNameLabel.isHidden = false
+        image.isHidden = false
+        questionView.isHidden = false
+        quizNameLabel.text = quizzes![sender].title
+        
+        guard let imageURL = URL(string: (quizzes?[sender].image)!) else {return}
+        image.kf.setImage(with:imageURL)
+        questionView.setQuestion(questionModel: quizzes![sender].questions[0])
     }
     
 }

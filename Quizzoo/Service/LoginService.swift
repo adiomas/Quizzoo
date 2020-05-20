@@ -30,8 +30,12 @@ class LoginService {
                 return
             }
             
-            guard let jsonData = data else {return}
-
+            guard let jsonData = data else {
+                completionHandler(nil)
+                return
+                
+            }
+            
             do {
                 let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
                 guard let server_response = json as? NSDictionary else { return }
