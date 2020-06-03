@@ -17,6 +17,8 @@
 		87B52A5924674E9B0081BD70 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87B52A5724674E9B0081BD70 /* LaunchScreen.storyboard */; };
 		87B52A6224675E920081BD70 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A6124675E910081BD70 /* QuestionView.swift */; };
 		87B52A64246764CE0081BD70 /* QuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A63246764CE0081BD70 /* QuizService.swift */; };
+		87FA79872485951F008D9A80 /* QuizzesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FA79862485951F008D9A80 /* QuizzesCell.swift */; };
+		87FA798C2486F461008D9A80 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FA798B2486F461008D9A80 /* QuizViewController.swift */; };
 		B52EA21FD1064D9526432322 /* Pods_Quizzoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7890FCA626BE418F832E22D9 /* Pods_Quizzoo.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		87B52A5A24674E9B0081BD70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B52A6124675E910081BD70 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		87B52A63246764CE0081BD70 /* QuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizService.swift; sourceTree = "<group>"; };
+		87FA79862485951F008D9A80 /* QuizzesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesCell.swift; sourceTree = "<group>"; };
+		87FA798B2486F461008D9A80 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		A8102DC4D3938DDBBC143FD4 /* Pods-Quizzoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizzoo.debug.xcconfig"; path = "Target Support Files/Pods-Quizzoo/Pods-Quizzoo.debug.xcconfig"; sourceTree = "<group>"; };
 		FE13E2A6EEE57DA297C832C0 /* Pods-Quizzoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quizzoo.release.xcconfig"; path = "Target Support Files/Pods-Quizzoo/Pods-Quizzoo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +101,8 @@
 				87B52A5724674E9B0081BD70 /* LaunchScreen.storyboard */,
 				87B52A5A24674E9B0081BD70 /* Info.plist */,
 				875DE2E82468596B00E05641 /* LoginViewController.swift */,
+				87FA79862485951F008D9A80 /* QuizzesCell.swift */,
+				87FA798B2486F461008D9A80 /* QuizViewController.swift */,
 			);
 			path = Quizzoo;
 			sourceTree = "<group>";
@@ -244,7 +250,9 @@
 				87B52A64246764CE0081BD70 /* QuizService.swift in Sources */,
 				87B52A4D24674E980081BD70 /* AppDelegate.swift in Sources */,
 				87B52A4F24674E980081BD70 /* SceneDelegate.swift in Sources */,
+				87FA798C2486F461008D9A80 /* QuizViewController.swift in Sources */,
 				875DE2F1246885D600E05641 /* LoginService.swift in Sources */,
+				87FA79872485951F008D9A80 /* QuizzesCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

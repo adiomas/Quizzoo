@@ -128,9 +128,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
         
         DispatchQueue.main.sync{
-            UserDefaults.standard.set(token, forKey: "accessToken")
+            let defaults = UserDefaults.standard
+            defaults.set(token, forKey: "accessToken")
+            defaults.set(usernameTextField.text, forKey: "Id")
+           
             print("USPJESNO")
             print(token)
+            print(UserDefaults.standard.value(forKey: "Id")!)
             let vc = ViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }

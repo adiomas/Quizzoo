@@ -11,8 +11,8 @@ import PureLayout
 import Kingfisher
 
 
-class ViewController: UIViewController {
-    
+class ViewController: UIViewController{
+
     var getQuizzesButtton: UIButton!
     
     var funFactLabel: UILabel!
@@ -35,10 +35,17 @@ class ViewController: UIViewController {
     
     var categoryButton2: UIButton!
     
+    var tableView = UITableView()
+    
+    var quizes : [QuizModel]?
 
     private let networkService = QuizService()
     
-    private var quizzes: [QuizModel]?
+    var getQuiz : [ResponseModel]?
+    
+
+    
+    var tableFooterView : UIView!
     
     var answerButtons : [UIButton] {
         return [questionView.answer1Button, questionView.answer2Button, questionView.answer3Button, questionView.answer4Button]
@@ -47,6 +54,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         buildViews()
+        setTableViewDelegates()
         createConstraints()
         view.backgroundColor = .white
     }
@@ -59,12 +67,36 @@ class ViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
+    
+    
+    
     func buildViews() {
+        view.addSubview(tableView)
+        tableView.isHidden = true
+        tableView.rowHeight = 100
+        tableView.register(QuizzesCell.self, forCellReuseIdentifier: "QuizzesCell")
+        
+        logoutButton = UIButton()
+        logoutButton.setTitle("LOGOUT", for: .normal)
+        logoutButton.setTitleColor(.blue, for: .normal)
+        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        
+
+
+        tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 80))
+        tableFooterView.backgroundColor = UIColor.white
+        tableFooterView.addSubview(logoutButton)
+        tableView.tableFooterView = tableFooterView
+        
+
+
         getQuizzesButtton = UIButton()
         getQuizzesButtton.setTitle("GET QUIZZES", for: .normal)
         getQuizzesButtton.setTitleColor(.blue, for: .normal)
         getQuizzesButtton.addTarget(self, action: #selector(getQuizzes), for: .touchUpInside)
         view.addSubview(getQuizzesButtton)
+        
+        
         
         funFactLabel = UILabel()
         funFactLabel.text = "Fun fact: "
@@ -96,12 +128,7 @@ class ViewController: UIViewController {
         errorLabel.isHidden = true
         view.addSubview(errorLabel)
         
-        logoutButton = UIButton()
-        logoutButton.isHidden = true
-        logoutButton.setTitle("LOGOUT", for: .normal)
-        logoutButton.setTitleColor(.blue, for: .normal)
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        view.addSubview(logoutButton)
+        
         
         categoryButtons = UIStackView()
         categoryButtons.axis = .horizontal
@@ -122,6 +149,11 @@ class ViewController: UIViewController {
         categoryButtons.addArrangedSubview(categoryButton2)
     }
     
+    func setTableViewDelegates() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
     func categoryButtonsInit(button : UIButton) {
         button.autoSetDimensions(to: .init(width: 200, height: 70))
         button.titleLabel?.textAlignment = .center
@@ -132,13 +164,15 @@ class ViewController: UIViewController {
         button.isHidden = true
         button.layer.cornerRadius = 5
         button.layer.borderWidth = 1
-        button.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(chooseCategory(_:)), for: .touchUpInside)
     }
     
     
     func createConstraints() {
-        logoutButton.autoPinEdge(toSuperviewEdge: .top, withInset: 35)
-        logoutButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        tableView.autoPinEdgesToSuperviewEdges()
+        
+        logoutButton.autoPinEdge(.top, to: .top, of: tableFooterView, withOffset: 20)
+        logoutButton.autoAlignAxis(.vertical, toSameAxisOf: tableFooterView)
         
         getQuizzesButtton.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
         getQuizzesButtton.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
@@ -169,19 +203,76 @@ class ViewController: UIViewController {
         
         errorLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 20)
         errorLabel.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
+        
     }
     
     @objc func getQuizzes() {
-        networkService.getQuizzes(completionHandler: saveQuizzes(responseModel:))
+        networkService.getQuizzes() {  (quizes) in
+            guard let getQuiz = quizes else {
+                return
+            }
+            self.quizes = getQuiz.quizzes
+            
+            self.refresh()
+            print(self.headerTitles())
+        }
+        
     }
     
+    @objc func refresh() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.isHidden = false
+            self.getQuizzesButtton.isHidden = true
+          
+            
+            
+        }
+    }
+    
+    func numberOfCategories() -> Int {
+        return quizes?.map{$0.category}.removingDuplicates().count ?? 0
+
+    }
+    
+    func sectionArrays() -> [[QuizModel]] {
+        let sportCategory = quizes?.filter{(quiz) -> Bool in return (quiz.category?.contains("SPORTS"))!}
+        let scienceCategory = quizes?.filter{(quiz) -> Bool in return (quiz.category?.contains("SCIENCE"))!}
+        return [sportCategory!,scienceCategory!]
+    }
+    
+    func headerTitles() -> [String?]{
+        return (quizes?.map{$0.category}.removingDuplicates())!
+    }
+   
+    
+    func quizzes(atIndex index: Int) -> QuizModel? {
+        guard let quizes = quizes else {
+            DispatchQueue.main.sync {
+                let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(ok)
+                present(alert,animated: true,completion:nil)
+            }
+            return nil
+        }
+        if(index == quizes.count) {
+            return nil
+
+        }
+        return quizes[index]
+    }
+    
+    
     @objc func logout() {
-        UserDefaults.standard.removeObject(forKey: "accessToken")
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "accessToken")
+        defaults.removeObject(forKey: "Id")
         self.navigationController?.popViewController(animated: true)
     }
     
-    func saveQuizzes(responseModel : ResponseModel?) {
-        guard let responseModel = responseModel else {
+    func saveQuizzes(quizModel : [QuizModel]?) {
+        guard let quizModel = quizModel else {
             DispatchQueue.main.sync {
                 let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
                 let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -191,9 +282,10 @@ class ViewController: UIViewController {
             return
         }
     
-        self.quizzes = responseModel.quizzes
+//        self.quizzes = quizModel
+       
         
-        let ffNumber = responseModel.quizzes
+        let ffNumber = quizModel
             .map{$0.questions}
             .flatMap{$0.map{$0.question}}
             .filter { (question) -> Bool in
@@ -202,39 +294,98 @@ class ViewController: UIViewController {
         .count
             
         DispatchQueue.main.sync {
-            categoryButton1.setTitle(responseModel.quizzes[0].title, for: .normal)
-            categoryButton2.setTitle(responseModel.quizzes[1].title, for: .normal)
+            categoryButton1.setTitle(quizModel[0].title, for: .normal)
+            categoryButton2.setTitle(quizModel[1].title, for: .normal)
             
-            categoryButton1.isHidden = false
-            categoryButton2.isHidden = false
-            funFactLabel.isHidden = false
-            numberLabel.isHidden = false
-            numberLabel.text = String(ffNumber)
-            logoutButton.isHidden = false
+            tableView.isHidden = false
+            getQuizzesButtton.isHidden = true
+            
+            
+//            categoryButton1.isHidden = false
+//            categoryButton2.isHidden = false
+//            funFactLabel.isHidden = false
+//            numberLabel.isHidden = false
+//            numberLabel.text = String(ffNumber)
+//            logoutButton.isHidden = false
         }
     }
+//
+//    @objc func chooseCategory(_ sender: UIButton) {
+//        if sender.tag == 0 {
+//            categoryButtonsShow(sender: sender.tag)
+//            answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)}
+//
+//        }else {
+//            categoryButtonsShow(sender: sender.tag)
+//            answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)}
+//        }
+//    }
+//
+//    func categoryButtonsShow(sender : Int) {
+//        quizNameLabel.isHidden = false
+//        image.isHidden = false
+//        questionView.isHidden = false
+//        quizNameLabel.text = quizzes[sender].title
+//
+//        guard let imageURL = URL(string: (quizzes?[sender].image)!) else {return}
+//        image.kf.setImage(with:imageURL)
+//        questionView.setQuestion(questionModel: quizzes![sender].questions[0])
+//    }
     
-    @objc func chooseCategory(_ sender: UIButton) {
-        if sender.tag == 0 {
-            categoryButtonsShow(sender: sender.tag)
-            answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)}
-            
-        }else {
-            categoryButtonsShow(sender: sender.tag)
-            answerButtons.forEach{button in button.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)}
-        }
-    }
-    
-    func categoryButtonsShow(sender : Int) {
-        quizNameLabel.isHidden = false
-        image.isHidden = false
-        questionView.isHidden = false
-        quizNameLabel.text = quizzes![sender].title
-        
-        guard let imageURL = URL(string: (quizzes?[sender].image)!) else {return}
-        image.kf.setImage(with:imageURL)
-        questionView.setQuestion(questionModel: quizzes![sender].questions[0])
-    }
+
     
 }
 
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sectionArrays()[section].count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return numberOfCategories()
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "QuizzesCell", for: indexPath) as! QuizzesCell
+        let quizzes = sectionArrays()[indexPath.section][indexPath.row]
+        cell.setup(withQuizzes: quizzes)
+        
+        return cell
+ 
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section < headerTitles().count {
+            return headerTitles()[section]
+        }
+        return nil
+    }
+    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let quizzes = sectionArrays()[indexPath.section][indexPath.row]
+        let quizViewController = QuizViewController()
+        quizViewController.quizzes = quizzes
+            navigationController?.pushViewController(quizViewController, animated: true)
+        }
+    }
+    
+    
+
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}
