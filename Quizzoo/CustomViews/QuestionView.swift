@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol QuestionViewDelegate: class {
+    func didChooseAnswer(btnIndex: Int)
+}
+
 class QuestionView: UIView {
     
     var questionLabel : UILabel!
@@ -17,9 +21,19 @@ class QuestionView: UIView {
     var answer3Button : UIButton!
     var answer4Button : UIButton!
     
+    
+    var answerButtons : [UIButton] {
+            return [answer1Button, answer2Button, answer3Button, answer4Button]
+        }
+    
     var answersStackView: UIStackView!
     
     var questionModel: QuestionModel?
+    
+    var delegate: QuestionViewDelegate?
+    
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame : frame)
@@ -35,6 +49,7 @@ class QuestionView: UIView {
     
     func buildViews() {
         questionLabel = UILabel()
+        questionLabel.numberOfLines = 0
         questionLabel.text = "Question"
         addSubview(questionLabel)
         
@@ -75,12 +90,13 @@ class QuestionView: UIView {
     
     @objc
     func checkAnswer(_ sender: UIButton){
-        if questionModel?.correct_answer == sender.tag {
-            sender.backgroundColor = .green
-        }
-        else{
+        answerButtons[questionModel!.correct_answer].backgroundColor = .green
+        if questionModel?.correct_answer != sender.tag {
             sender.backgroundColor = .red
         }
+        delegate?.didChooseAnswer(btnIndex: sender.tag)
+        print("AJASDASA")
+     
     }
     
     func makeConstraints(){
@@ -114,3 +130,5 @@ class QuestionView: UIView {
         }
     }
 }
+
+

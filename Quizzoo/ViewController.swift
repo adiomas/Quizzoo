@@ -56,6 +56,7 @@ class ViewController: UIViewController{
         buildViews()
         setTableViewDelegates()
         createConstraints()
+        getQuizzes()
         view.backgroundColor = .white
     }
     
@@ -90,11 +91,11 @@ class ViewController: UIViewController{
         
 
 
-        getQuizzesButtton = UIButton()
-        getQuizzesButtton.setTitle("GET QUIZZES", for: .normal)
-        getQuizzesButtton.setTitleColor(.blue, for: .normal)
-        getQuizzesButtton.addTarget(self, action: #selector(getQuizzes), for: .touchUpInside)
-        view.addSubview(getQuizzesButtton)
+//        getQuizzesButtton = UIButton()
+//        getQuizzesButtton.setTitle("GET QUIZZES", for: .normal)
+//        getQuizzesButtton.setTitleColor(.blue, for: .normal)
+//        getQuizzesButtton.addTarget(self, action: #selector(getQuizzes), for: .touchUpInside)
+//        view.addSubview(getQuizzesButtton)
         
         
         
@@ -129,24 +130,24 @@ class ViewController: UIViewController{
         view.addSubview(errorLabel)
         
         
+//
+//        categoryButtons = UIStackView()
+//        categoryButtons.axis = .horizontal
+//        categoryButtons.spacing = 5
+//        categoryButtons.distribution = .fillEqually
+//        view.addSubview(categoryButtons)
         
-        categoryButtons = UIStackView()
-        categoryButtons.axis = .horizontal
-        categoryButtons.spacing = 5
-        categoryButtons.distribution = .fillEqually
-        view.addSubview(categoryButtons)
-        
-        categoryButton1 = UIButton()
-        categoryButtonsInit(button: categoryButton1)
-        categoryButton1.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)
-        categoryButton1.tag = 0
-        categoryButtons.addArrangedSubview(categoryButton1)
-        
-        categoryButton2 = UIButton()
-        categoryButtonsInit(button: categoryButton2)
-        categoryButton2.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
-        categoryButton2.tag = 1
-        categoryButtons.addArrangedSubview(categoryButton2)
+//        categoryButton1 = UIButton()
+//        categoryButtonsInit(button: categoryButton1)
+//        categoryButton1.backgroundColor = UIColor(red: 0.5843, green: 0.8588, blue: 0, alpha: 1.0)
+//        categoryButton1.tag = 0
+//        categoryButtons.addArrangedSubview(categoryButton1)
+//
+//        categoryButton2 = UIButton()
+//        categoryButtonsInit(button: categoryButton2)
+//        categoryButton2.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
+//        categoryButton2.tag = 1
+//        categoryButtons.addArrangedSubview(categoryButton2)
     }
     
     func setTableViewDelegates() {
@@ -174,39 +175,39 @@ class ViewController: UIViewController{
         logoutButton.autoPinEdge(.top, to: .top, of: tableFooterView, withOffset: 20)
         logoutButton.autoAlignAxis(.vertical, toSameAxisOf: tableFooterView)
         
-        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
-        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
-        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
+//        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .top, withInset: 50)
+//        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .leading, withInset: 50)
+//        getQuizzesButtton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 50)
         
-        funFactLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 10)
-        funFactLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-        
-        numberLabel.autoAlignAxis(.horizontal, toSameAxisOf: funFactLabel)
-        numberLabel.autoPinEdge(.leading, to: .trailing, of: funFactLabel, withOffset: 5)
-        
-        categoryButtons.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
-        categoryButtons.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
+//        funFactLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 10)
+//        funFactLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+//
+//        numberLabel.autoAlignAxis(.horizontal, toSameAxisOf: funFactLabel)
+//        numberLabel.autoPinEdge(.leading, to: .trailing, of: funFactLabel, withOffset: 5)
+//
+//        categoryButtons.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
+//        categoryButtons.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
        
         
-        quizNameLabel.autoPinEdge(.top, to: .bottom, of: categoryButtons, withOffset: 10)
-        quizNameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        quizNameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        image.autoPinEdge(.top, to: .bottom, of: quizNameLabel, withOffset: 10)
-        image.autoAlignAxis(.vertical, toSameAxisOf: quizNameLabel)
-        image.autoSetDimensions(to: CGSize(width: 100, height: 100))
-        
-        questionView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        questionView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        questionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        questionView.autoPinEdge(.top, to: .bottom, of: image, withOffset: 10)
-        
-        errorLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 20)
-        errorLabel.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
+//        quizNameLabel.autoPinEdge(.top, to: .bottom, of: categoryButtons, withOffset: 10)
+//        quizNameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+//        quizNameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+//
+//        image.autoPinEdge(.top, to: .bottom, of: quizNameLabel, withOffset: 10)
+//        image.autoAlignAxis(.vertical, toSameAxisOf: quizNameLabel)
+//        image.autoSetDimensions(to: CGSize(width: 100, height: 100))
+//
+//        questionView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+//        questionView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+//        questionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+//        questionView.autoPinEdge(.top, to: .bottom, of: image, withOffset: 10)
+//
+//        errorLabel.autoPinEdge(.top, to: .bottom, of: getQuizzesButtton, withOffset: 20)
+//        errorLabel.autoAlignAxis(.vertical, toSameAxisOf: getQuizzesButtton)
         
     }
     
-    @objc func getQuizzes() {
+    func getQuizzes() {
         networkService.getQuizzes() {  (quizes) in
             guard let getQuiz = quizes else {
                 return
@@ -223,7 +224,7 @@ class ViewController: UIViewController{
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.tableView.isHidden = false
-            self.getQuizzesButtton.isHidden = true
+           
           
             
             
