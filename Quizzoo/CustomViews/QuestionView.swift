@@ -9,7 +9,7 @@
 import UIKit
 
 protocol QuestionViewDelegate: class {
-    func didChooseAnswer(btnIndex: Int)
+    func clickedAnswer()
 }
 
 class QuestionView: UIView {
@@ -22,23 +22,40 @@ class QuestionView: UIView {
     var answer4Button : UIButton!
     
     
+    weak var delegate: QuestionViewDelegate?
+    
+    
     var answerButtons : [UIButton] {
-            return [answer1Button, answer2Button, answer3Button, answer4Button]
-        }
+        return [answer1Button, answer2Button, answer3Button, answer4Button]
+    }
     
     var answersStackView: UIStackView!
     
     var questionModel: QuestionModel?
     
-    var delegate: QuestionViewDelegate?
     
     
+    
+    @objc
+    func checkAnswer(_ sender: UIButton){
+        answerButtons[questionModel!.correct_answer].backgroundColor = .green
+        if questionModel?.correct_answer != sender.tag {
+            sender.backgroundColor = .red
+        }
+        delegate?.clickedAnswer()
+        
+        print("AJASDASA")
+        
+    }
     
     
     override init(frame: CGRect) {
         super.init(frame : frame)
         buildViews()
         makeConstraints()
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -88,16 +105,7 @@ class QuestionView: UIView {
         button.addTarget(self, action: #selector(checkAnswer(_:)), for: .touchUpInside)
     }
     
-    @objc
-    func checkAnswer(_ sender: UIButton){
-        answerButtons[questionModel!.correct_answer].backgroundColor = .green
-        if questionModel?.correct_answer != sender.tag {
-            sender.backgroundColor = .red
-        }
-        delegate?.didChooseAnswer(btnIndex: sender.tag)
-        print("AJASDASA")
-     
-    }
+    
     
     func makeConstraints(){
         questionLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 10)

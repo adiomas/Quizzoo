@@ -10,22 +10,18 @@ import UIKit
 import Kingfisher
 import PureLayout
 
-class QuizViewController: UIViewController{
+class QuizViewController: UIViewController  {
     
     var titleLabel : UILabel!
     var quizImage : UIImageView!
     var startQuizButton : UIButton!
-    var questionView: [QuestionView]! = []
+    var questionViews: [QuestionView]! = []
+    
     
     var scrollView : UIScrollView!
-    
-    
     var questionsStackView : UIStackView!
     
-//        var answerButtons : [UIButton] {
-//            return [questionView.answer1Button, questionView.answer2Button, questionView.answer3Button, questionView.answer4Button]
-//        }
-//    
+    var questionsAnswered : Int = 0
     var quizzes : QuizModel? = nil
     
     override func viewDidLoad() {
@@ -33,6 +29,8 @@ class QuizViewController: UIViewController{
         buildViews()
         createConstraints()
         view.backgroundColor = .white
+        
+        
         
     }
     
@@ -68,29 +66,30 @@ class QuizViewController: UIViewController{
         startQuizButton.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
         startQuizButton.addTarget(self, action: #selector(onClickStartQuiz(_:)), for: .touchUpInside)
         view.addSubview(startQuizButton)
-  
+        
         
         scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isHidden = false
-        scrollView.backgroundColor = .lightGray
+        scrollView.isScrollEnabled = false
+        scrollView.backgroundColor = .white
         view.addSubview(scrollView)
-//
+        //
         questionsStackView = UIStackView()
         questionsStackView.axis = .horizontal
         questionsStackView.spacing = 0;
-      
+        
         questionsStackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(questionsStackView)
         
         
-
+        
         for i in 0..<quizzes!.questions.count{
-            questionView.append(QuestionView())
-            questionView[i].setQuestion(questionModel: (quizzes?.questions[i])!)
-
-            questionsStackView.addArrangedSubview(questionView[i])
-
+            questionViews.append(QuestionView())
+            questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
+            questionViews[i].delegate = self
+            questionsStackView.addArrangedSubview(questionViews[i])
+            
         }
     }
     
@@ -103,7 +102,7 @@ class QuizViewController: UIViewController{
         quizImage.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 20)
         quizImage.autoAlignAxis(.vertical, toSameAxisOf: titleLabel)
         quizImage.autoSetDimensions(to: CGSize(width: 200, height: 113))
-     
+        
         
         startQuizButton.autoPinEdge(.top, to: .bottom, of: quizImage, withOffset: 20)
         startQuizButton.autoAlignAxis(.vertical, toSameAxisOf: quizImage)
@@ -114,46 +113,50 @@ class QuizViewController: UIViewController{
         scrollView.autoAlignAxis(.vertical, toSameAxisOf: startQuizButton)
         scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         scrollView.autoMatch(.width, to: .width, of: view)
-    
+        
         for i in 0..<quizzes!.questions.count{
-            questionView[i].autoMatch(.width, to: .width, of: view)
-
+            questionViews[i].autoMatch(.width, to: .width, of: view)
+            
         }
         
         questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
-      questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-      questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-      questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
-   
-//        questionsStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true;
-//        questionsStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true;
-//        questionsStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true;
-//        questionsStackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true;
-       
-      
-       
-
+        questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
+        questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
+        questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
     }
     
     @objc func onClickStartQuiz(_ sender: UIButton) {
         scrollView.isHidden = false
+        let questionView = QuestionView()
+        questionView.delegate = self
     }
     
     func scrollToAnotherQuestion() {
-        scrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.size.width, y: 0), animated: true)
+        let deltax = questionViews[0].frame.size.width * CGFloat(questionsAnswered)
+        scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)   
     }
 }
 
-    extension QuizViewController : QuestionViewDelegate {
-        func didChooseAnswer(btnIndex: Int) {
-                print("AADKL")
-                scrollToAnotherQuestion()
-                
-            }
+extension QuizViewController: QuestionViewDelegate {
+    func clickedAnswer() {
+        print("aa")
+        questionViews[questionsAnswered].isUserInteractionEnabled = false
+        questionsAnswered += 1
+       
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            print("Timer fired!")
+            self.scrollToAnotherQuestion()
         }
+        
+    }
     
+    
+}
 
-    
-    
+
+
+
+
+
 
 
