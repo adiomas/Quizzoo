@@ -132,43 +132,46 @@ class QuizViewController: UIViewController  {
     
     func scrollToAnotherQuestion() {
         let deltax = self.questionViews[0].frame.size.width * CGFloat(questionsAnswered)
-        
         scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
     }
     
-    func checkResult(token: String){
-        print("aaa")
+    func sendResultsToService(quizId: Int, userId: Int, duration: Double, correctAnswers: Int ) {
+        resultService.sendResults(quizId,userId,duration,correctAnswers) { check in
+            self.getBackToQuizzes(check: check)
+        }
+        
     }
     
-    func sendResultsToService(quizId: Int, userId: String, duration: Double, correctAnswers: Int ) {
-        resultService.sendResults(quizId,userId,duration,correctAnswers)
-        
+    func getBackToQuizzes(check: Int?) {
+       DispatchQueue.main.async {
+        if (check == 1) {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+        }
     }
 }
 
 extension QuizViewController: QuestionViewDelegate {
     func clickedAnswer(answer: Int) {
-        print("aa")
+        
         questionViews[questionsAnswered].isUserInteractionEnabled = false
         questionsAnswered += 1
         if(answer == 1) {
             correctAnswers += 1
         }
         if(questionsAnswered < questionViews.count) {
+            print("question answered:",questionsAnswered)
+
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 self.scrollToAnotherQuestion()
             }
         } else {
             let duration = Double(Date().timeIntervalSince(timer))
-            
-            sendResultsToService(quizId: quizzes!.id, userId: UserDefaults.standard.value(forKey: "Id")! as! String, duration: duration, correctAnswers: correctAnswers)
-            print(duration)
-            print(correctAnswers)
-            print(UserDefaults.standard.value(forKey: "Id")!)
-            print(quizzes!.id)
+            sendResultsToService(quizId: quizzes!.id, userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
         }
     }
-    
     
 }
 

@@ -46,9 +46,6 @@ class QuestionView: UIView {
             sender.backgroundColor = .red
         }
         delegate?.clickedAnswer(answer: answer)
-        
-        print("AJASDASA")
-        
     }
     
     
@@ -74,6 +71,7 @@ class QuestionView: UIView {
         addSubview(questionLabel)
         
         answersStackView = UIStackView()
+        
         answersStackView.axis = .vertical
         answersStackView.spacing = 10
         answersStackView.distribution = .fillEqually
