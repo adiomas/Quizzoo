@@ -17,21 +17,20 @@ class QuizViewController: UIViewController  {
     var startQuizButton : UIButton!
     var questionViews: [QuestionView]! = []
     
-    
     var scrollView : UIScrollView!
     var questionsStackView : UIStackView!
-    
+    var timer : Date!
+    var correctAnswers : Int = 0
     var questionsAnswered : Int = 0
     var quizzes : QuizModel? = nil
+    
+    private let resultService = ResultService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         buildViews()
         createConstraints()
         view.backgroundColor = .white
-        
-        
-        
     }
     
     var quizTitle: String {
@@ -69,26 +68,28 @@ class QuizViewController: UIViewController  {
         
         
         scrollView = UIScrollView()
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.isHidden = false
+        scrollView.isHidden = true
         scrollView.isScrollEnabled = false
         scrollView.backgroundColor = .white
         view.addSubview(scrollView)
-        //
+        
+      
+
+        
         questionsStackView = UIStackView()
         questionsStackView.axis = .horizontal
         questionsStackView.spacing = 0;
         
-        questionsStackView.translatesAutoresizingMaskIntoConstraints = false
+    
         scrollView.addSubview(questionsStackView)
         
         
         
         for i in 0..<quizzes!.questions.count{
-            questionViews.append(QuestionView())
-            questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
-            questionViews[i].delegate = self
-            questionsStackView.addArrangedSubview(questionViews[i])
+                questionViews.append(QuestionView())
+                questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
+                questionViews[i].delegate = self
+                questionsStackView.addArrangedSubview(questionViews[i])
             
         }
     }
@@ -98,7 +99,7 @@ class QuizViewController: UIViewController  {
         titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
         titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
         
-        quizImage.translatesAutoresizingMaskIntoConstraints = false
+
         quizImage.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 20)
         quizImage.autoAlignAxis(.vertical, toSameAxisOf: titleLabel)
         quizImage.autoSetDimensions(to: CGSize(width: 200, height: 113))
@@ -109,45 +110,63 @@ class QuizViewController: UIViewController  {
         
         
         
-        scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 20)
-        scrollView.autoAlignAxis(.vertical, toSameAxisOf: startQuizButton)
-        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
-        scrollView.autoMatch(.width, to: .width, of: view)
         
+        scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 10).priority = .defaultLow
+        scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
+        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
+
         for i in 0..<quizzes!.questions.count{
             questionViews[i].autoMatch(.width, to: .width, of: view)
-            
         }
         
-        questionsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
-        questionsStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-        questionsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-        questionsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
+        questionsStackView.autoMatch(.height, to: .height, of: scrollView)
+
     }
     
     @objc func onClickStartQuiz(_ sender: UIButton) {
         scrollView.isHidden = false
-        let questionView = QuestionView()
-        questionView.delegate = self
+        timer = Date()
+     
     }
     
     func scrollToAnotherQuestion() {
-        let deltax = questionViews[0].frame.size.width * CGFloat(questionsAnswered)
-        scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)   
+        let deltax = self.questionViews[0].frame.size.width * CGFloat(questionsAnswered)
+        
+        scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
+    }
+    
+    func checkResult(token: String){
+        print("aaa")
+    }
+    
+    func sendResultsToService(quizId: Int, userId: String, duration: Double, correctAnswers: Int ) {
+        resultService.sendResults(quizId,userId,duration,correctAnswers)
+        
     }
 }
 
 extension QuizViewController: QuestionViewDelegate {
-    func clickedAnswer() {
+    func clickedAnswer(answer: Int) {
         print("aa")
         questionViews[questionsAnswered].isUserInteractionEnabled = false
         questionsAnswered += 1
-       
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            print("Timer fired!")
-            self.scrollToAnotherQuestion()
+        if(answer == 1) {
+            correctAnswers += 1
         }
-        
+        if(questionsAnswered < questionViews.count) {
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                self.scrollToAnotherQuestion()
+            }
+        } else {
+            let duration = Double(Date().timeIntervalSince(timer))
+            
+            sendResultsToService(quizId: quizzes!.id, userId: UserDefaults.standard.value(forKey: "Id")! as! String, duration: duration, correctAnswers: correctAnswers)
+            print(duration)
+            print(correctAnswers)
+            print(UserDefaults.standard.value(forKey: "Id")!)
+            print(quizzes!.id)
+        }
     }
     
     

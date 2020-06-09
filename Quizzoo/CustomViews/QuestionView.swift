@@ -9,7 +9,7 @@
 import UIKit
 
 protocol QuestionViewDelegate: class {
-    func clickedAnswer()
+    func clickedAnswer(answer : Int)
 }
 
 class QuestionView: UIView {
@@ -20,7 +20,8 @@ class QuestionView: UIView {
     var answer2Button : UIButton!
     var answer3Button : UIButton!
     var answer4Button : UIButton!
-    
+  
+    var answer : Int = 0
     
     weak var delegate: QuestionViewDelegate?
     
@@ -39,10 +40,12 @@ class QuestionView: UIView {
     @objc
     func checkAnswer(_ sender: UIButton){
         answerButtons[questionModel!.correct_answer].backgroundColor = .green
-        if questionModel?.correct_answer != sender.tag {
+        if (questionModel?.correct_answer == sender.tag) {
+            answer += 1
+        }else {
             sender.backgroundColor = .red
         }
-        delegate?.clickedAnswer()
+        delegate?.clickedAnswer(answer: answer)
         
         print("AJASDASA")
         
