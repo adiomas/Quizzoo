@@ -44,7 +44,6 @@ class QuizViewController: UIViewController  {
         return nil
     }
     
-    
     func buildViews() {
         titleLabel = UILabel()
         titleLabel.text = quizTitle
@@ -66,31 +65,23 @@ class QuizViewController: UIViewController  {
         startQuizButton.addTarget(self, action: #selector(onClickStartQuiz(_:)), for: .touchUpInside)
         view.addSubview(startQuizButton)
         
-        
         scrollView = UIScrollView()
         scrollView.isHidden = true
         scrollView.isScrollEnabled = false
         scrollView.backgroundColor = .white
         view.addSubview(scrollView)
         
-      
-
-        
         questionsStackView = UIStackView()
         questionsStackView.axis = .horizontal
         questionsStackView.spacing = 0;
         
-    
         scrollView.addSubview(questionsStackView)
         
-        
-        
         for i in 0..<quizzes!.questions.count{
-                questionViews.append(QuestionView())
-                questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
-                questionViews[i].delegate = self
-                questionsStackView.addArrangedSubview(questionViews[i])
-            
+            questionViews.append(QuestionView())
+            questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
+            questionViews[i].delegate = self
+            questionsStackView.addArrangedSubview(questionViews[i])
         }
     }
     
@@ -99,7 +90,7 @@ class QuizViewController: UIViewController  {
         titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
         titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
         
-
+        
         quizImage.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 20)
         quizImage.autoAlignAxis(.vertical, toSameAxisOf: titleLabel)
         quizImage.autoSetDimensions(to: CGSize(width: 200, height: 113))
@@ -108,26 +99,22 @@ class QuizViewController: UIViewController  {
         startQuizButton.autoPinEdge(.top, to: .bottom, of: quizImage, withOffset: 20)
         startQuizButton.autoAlignAxis(.vertical, toSameAxisOf: quizImage)
         
-        
-        
-        
         scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 10).priority = .defaultLow
         scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-
+        
         for i in 0..<quizzes!.questions.count{
             questionViews[i].autoMatch(.width, to: .width, of: view)
         }
         
         questionsStackView.autoMatch(.height, to: .height, of: scrollView)
-
     }
     
     @objc func onClickStartQuiz(_ sender: UIButton) {
         scrollView.isHidden = false
         timer = Date()
-     
+        
     }
     
     func scrollToAnotherQuestion() {
@@ -143,12 +130,12 @@ class QuizViewController: UIViewController  {
     }
     
     func getBackToQuizzes(check: Int?) {
-       DispatchQueue.main.async {
-        if (check == 1) {
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
+        DispatchQueue.main.async {
+            if (check == 1) {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }
@@ -163,7 +150,6 @@ extension QuizViewController: QuestionViewDelegate {
         }
         if(questionsAnswered < questionViews.count) {
             print("question answered:",questionsAnswered)
-
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 self.scrollToAnotherQuestion()
             }

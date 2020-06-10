@@ -25,7 +25,6 @@ class QuizzesCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         buildViews()
         createConstraints()
     }
@@ -87,22 +86,20 @@ class QuizzesCell: UITableViewCell {
         quizImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 12)
         quizImage.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
         quizImage.autoSetDimensions(to: CGSize(width: 120, height: 67))
-
+        
         quizTitle.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
         quizTitle.autoPinEdge(.leading, to: .trailing, of: quizImage, withOffset: 10)
         
-
-
         levelImage1.autoAlignAxis(.horizontal, toSameAxisOf: quizTitle)
         levelImage1.autoPinEdge(.leading, to: .trailing, of: quizTitle, withOffset: 5)
-
+        
         levelImage2.autoAlignAxis(.horizontal, toSameAxisOf: levelImage1)
         levelImage2.autoPinEdge(.leading, to: .trailing, of: levelImage1, withOffset: 5)
-
+        
         levelImage3.autoAlignAxis(.horizontal, toSameAxisOf: levelImage2)
         levelImage3.autoPinEdge(.leading, to: .trailing, of: levelImage2, withOffset: 5)
         levelImage3.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
-
+        
         quizDescription.autoPinEdge(.top, to: .bottom, of: quizTitle, withOffset: 13)
         quizDescription.autoPinEdge(.leading, to: .trailing, of: quizImage, withOffset: 10)
         quizDescription.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
@@ -117,14 +114,14 @@ extension String {
         let font = UIFont.systemFont(ofSize: 10) // you can change your font size here
         let stringAttributes = [NSAttributedString.Key.font: font]
         let imageSize = nsString.size(withAttributes: stringAttributes)
-
+        
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0) //  begin image context
         UIColor.clear.set() // clear background
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize)) // set rect size
         nsString.draw(at: CGPoint.zero, withAttributes: stringAttributes) // draw text within rect
         let image = UIGraphicsGetImageFromCurrentImageContext() // create image from context
         UIGraphicsEndImageContext() //  end image context
-
+        
         return image ?? UIImage()
     }
 }
