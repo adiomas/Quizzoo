@@ -20,11 +20,10 @@ class QuestionView: UIView {
     var answer2Button : UIButton!
     var answer3Button : UIButton!
     var answer4Button : UIButton!
-  
+    
     var answer : Int = 0
     
     weak var delegate: QuestionViewDelegate?
-    
     
     var answerButtons : [UIButton] {
         return [answer1Button, answer2Button, answer3Button, answer4Button]
@@ -34,13 +33,11 @@ class QuestionView: UIView {
     
     var questionModel: QuestionModel?
     
-    
-    
-    
     @objc
     func checkAnswer(_ sender: UIButton){
-        answerButtons[questionModel!.correct_answer].backgroundColor = .green
-        if (questionModel?.correct_answer == sender.tag) {
+        guard let correctAnswer = questionModel?.correct_answer else { return }
+        answerButtons[correctAnswer].backgroundColor = .green
+        if (correctAnswer == sender.tag) {
             answer += 1
         }else {
             sender.backgroundColor = .red
@@ -52,10 +49,7 @@ class QuestionView: UIView {
     override init(frame: CGRect) {
         super.init(frame : frame)
         buildViews()
-        makeConstraints()
-        
-        
-        
+        makeConstraints()   
     }
     
     required init?(coder: NSCoder) {
@@ -71,7 +65,6 @@ class QuestionView: UIView {
         addSubview(questionLabel)
         
         answersStackView = UIStackView()
-        
         answersStackView.axis = .vertical
         answersStackView.spacing = 10
         answersStackView.distribution = .fillEqually

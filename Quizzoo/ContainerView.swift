@@ -13,17 +13,16 @@ class ContainerView: UIView {
     var scrollView : UIScrollView!
     
     override init(frame: CGRect) {
-          super.init(frame : frame)
-          buildViews()
-          createConstraints()
- 
-      }
-      
-      required init?(coder: NSCoder) {
-          super.init(coder: coder)
-          buildViews()
-          createConstraints()
-      }
+        super.init(frame : frame)
+        buildViews()
+        createConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        buildViews()
+        createConstraints()
+    }
     
     
     
@@ -34,15 +33,15 @@ class ContainerView: UIView {
         scrollView.backgroundColor = .white
         addSubview(scrollView)   
     }
-
-
-func createConstraints() {
-    scrollView.autoPinEdgesToSuperviewEdges()
-
-}
     
-func scroll(deltax: CGFloat) {
-    scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
-}
-
+    
+    func createConstraints() {
+        scrollView.autoPinEdgesToSuperviewEdges()
+        
+    }
+    
+    func scroll(deltax: CGFloat) {
+        scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
+    }
+    
 }

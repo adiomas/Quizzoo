@@ -12,7 +12,7 @@ import Kingfisher
 
 
 class ViewController: UIViewController{
-
+    
     var getQuizzesButtton: UIButton!
     
     var funFactLabel: UILabel!
@@ -32,11 +32,11 @@ class ViewController: UIViewController{
     var tableView = UITableView()
     
     var quizes : [QuizModel]?
-
+    
     private let networkService = QuizService()
     
     var getQuiz : [ResponseModel]?
-
+    
     var tableFooterView : UIView!
     
     override func viewDidLoad() {
@@ -55,9 +55,6 @@ class ViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
     }
-    
-    
-    
     
     func buildViews() {
         view.addSubview(tableView)
@@ -112,7 +109,16 @@ class ViewController: UIViewController{
     }
     
     func createConstraints() {
-        tableView.autoPinEdgesToSuperviewEdges()
+        funFactLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 40)
+        funFactLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+               
+        numberLabel.autoAlignAxis(.horizontal, toSameAxisOf: funFactLabel)
+        numberLabel.autoPinEdge(.leading, to: .trailing, of: funFactLabel, withOffset: 5)
+        
+        tableView.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
+        tableView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
+        tableView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
+        tableView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         
         logoutButton.autoPinEdge(.top, to: .top, of: tableFooterView, withOffset: 20)
         logoutButton.autoAlignAxis(.vertical, toSameAxisOf: tableFooterView)
@@ -125,22 +131,34 @@ class ViewController: UIViewController{
             }
             self.quizes = getQuiz.quizzes
             
-            self.refresh()
+            let ffNumber = getQuiz.quizzes
+                .map{$0.questions}
+                .flatMap{$0.map{$0.question}}
+                .filter { (question) -> Bool in
+                    return question.contains("NBA")
+            }
+            .count
+            self.refresh(number: ffNumber)
             print(self.headerTitles())
         }
         
     }
     
-    @objc func refresh() {
+    
+    
+    @objc func refresh(number : Int) {
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.tableView.isHidden = false
+            self.numberLabel.text = String(number)
+            self.numberLabel.isHidden = false
+            self.funFactLabel.isHidden = false
         }
     }
     
     func numberOfCategories() -> Int {
         return quizes?.map{$0.category}.removingDuplicates().count ?? 0
-
+        
     }
     
     func sectionArrays() -> [[QuizModel]] {
@@ -152,7 +170,7 @@ class ViewController: UIViewController{
     func headerTitles() -> [String?]{
         return (quizes?.map{$0.category}.removingDuplicates())!
     }
-   
+    
     
     func quizzes(atIndex index: Int) -> QuizModel? {
         guard let quizes = quizes else {
@@ -166,7 +184,7 @@ class ViewController: UIViewController{
         }
         if(index == quizes.count) {
             return nil
-
+            
         }
         return quizes[index]
     }
@@ -188,16 +206,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         return numberOfCategories()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizzesCell", for: indexPath) as! QuizzesCell
         let quizzes = sectionArrays()[indexPath.section][indexPath.row]
         cell.setup(withQuizzes: quizzes)
-        
         return cell
- 
+        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -207,27 +223,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return nil
     }
     
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let quizzes = sectionArrays()[indexPath.section][indexPath.row]
         let quizViewController = QuizViewController()
         quizViewController.quizzes = quizzes
-            navigationController?.pushViewController(quizViewController, animated: true)
-        }
+        navigationController?.pushViewController(quizViewController, animated: true)
     }
-    
+}
 
 extension Array where Element: Hashable {
     func removingDuplicates() -> [Element] {
         var addedDict = [Element: Bool]()
-
+        
         return filter {
             addedDict.updateValue(true, forKey: $0) == nil
         }
     }
-
+    
     mutating func removeDuplicates() {
         self = self.removingDuplicates()
     }

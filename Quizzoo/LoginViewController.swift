@@ -117,7 +117,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-        func checkToken(token : String?,id: Int?) {
+    func checkToken(token : String?,id: Int?) {
         guard let token = token else {
             DispatchQueue.main.sync{
                 let alert = UIAlertController(title: "Alert", message: "Username or password is incorrect!", preferredStyle: .alert)
@@ -131,10 +131,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         DispatchQueue.main.sync{
             let defaults = UserDefaults.standard
             defaults.set(token, forKey: "accessToken")
-            
             defaults.set(id, forKey: "Id")
-     
-           
             print("USPJESNO")
             
             let vc = ViewController()

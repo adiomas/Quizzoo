@@ -34,7 +34,6 @@ class ResultService {
                 return
             }
             
-        
             do {
                 guard let data = data else { return }
                 guard (try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]) != nil else { return }
@@ -50,7 +49,6 @@ class ResultService {
                 
             }
         }
-        
         task.resume()
     }
 }

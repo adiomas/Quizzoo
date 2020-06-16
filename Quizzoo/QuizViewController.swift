@@ -77,7 +77,9 @@ class QuizViewController: UIViewController  {
         
         scrollView.addSubview(questionsStackView)
         
-        for i in 0..<quizzes!.questions.count{
+        guard let counter = quizzes?.questions.count else { return }
+        
+        for i in 0..<counter {
             questionViews.append(QuestionView())
             questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
             questionViews[i].delegate = self
@@ -99,12 +101,14 @@ class QuizViewController: UIViewController  {
         startQuizButton.autoPinEdge(.top, to: .bottom, of: quizImage, withOffset: 20)
         startQuizButton.autoAlignAxis(.vertical, toSameAxisOf: quizImage)
         
-        scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 10).priority = .defaultLow
+        scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 10)
         scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+//        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         
-        for i in 0..<quizzes!.questions.count{
+        guard let counter = quizzes?.questions.count else { return }
+        
+        for i in 0..<counter{
             questionViews[i].autoMatch(.width, to: .width, of: view)
         }
         
@@ -155,7 +159,8 @@ extension QuizViewController: QuestionViewDelegate {
             }
         } else {
             let duration = Double(Date().timeIntervalSince(timer))
-            sendResultsToService(quizId: quizzes!.id, userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
+            guard let quizId = quizzes?.id else { return }
+            sendResultsToService(quizId: quizId, userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
         }
     }
     
