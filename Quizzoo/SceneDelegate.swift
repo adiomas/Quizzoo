@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createRootController() -> UINavigationController {
         if UserDefaults.standard.value(forKey: "accessToken") != nil {
-            let controller = ViewController()
+            let controller = TabBarController()
             let loginController =  LoginViewController()
             let navigationController = UINavigationController(rootViewController: loginController)
             navigationController.pushViewController(controller, animated: false)

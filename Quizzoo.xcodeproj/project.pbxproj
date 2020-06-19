@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		87262426248DB0C5001789C4 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87262425248DB0C5001789C4 /* ContainerView.swift */; };
+		872AD89F249901CE004C9B05 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872AD89E249901CE004C9B05 /* TabBarController.swift */; };
 		8756B1EA248FCFCA00E0DD21 /* ResultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756B1E9248FCFCA00E0DD21 /* ResultService.swift */; };
 		875DE2E724683C1E00E05641 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 875DE2E624683C1E00E05641 /* Kingfisher */; };
 		875DE2E92468596B00E05641 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875DE2E82468596B00E05641 /* LoginViewController.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		7890FCA626BE418F832E22D9 /* Pods_Quizzoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quizzoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87262425248DB0C5001789C4 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		872AD89E249901CE004C9B05 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8756B1E9248FCFCA00E0DD21 /* ResultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultService.swift; sourceTree = "<group>"; };
 		875DE2E82468596B00E05641 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		875DE2F0246885D600E05641 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				87FA79862485951F008D9A80 /* QuizzesCell.swift */,
 				87FA798B2486F461008D9A80 /* QuizViewController.swift */,
 				87262425248DB0C5001789C4 /* ContainerView.swift */,
+				872AD89E249901CE004C9B05 /* TabBarController.swift */,
 			);
 			path = Quizzoo;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				87B52A4D24674E980081BD70 /* AppDelegate.swift in Sources */,
 				87B52A4F24674E980081BD70 /* SceneDelegate.swift in Sources */,
 				87FA798C2486F461008D9A80 /* QuizViewController.swift in Sources */,
+				872AD89F249901CE004C9B05 /* TabBarController.swift in Sources */,
 				875DE2F1246885D600E05641 /* LoginService.swift in Sources */,
 				87FA79872485951F008D9A80 /* QuizzesCell.swift in Sources */,
 			);
