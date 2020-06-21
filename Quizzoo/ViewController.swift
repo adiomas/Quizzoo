@@ -39,8 +39,11 @@ class ViewController: UIViewController{
     
     var tableFooterView : UIView!
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tabBarController?.tabBar.isHidden = false
         buildViews()
         setTableViewDelegates()
         createConstraints()
@@ -194,7 +197,11 @@ class ViewController: UIViewController{
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "accessToken")
         defaults.removeObject(forKey: "Id")
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popToRootViewController(animated: true)
+        self.tabBarController?.navigationController?.popToRootViewController(animated: true)
+       
+       
+ 
     }
     
 }
@@ -229,8 +236,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         let quizzes = sectionArrays()[indexPath.section][indexPath.row]
         let quizViewController = QuizViewController()
+        quizViewController.hidesBottomBarWhenPushed = true
         quizViewController.quizzes = quizzes
         navigationController?.pushViewController(quizViewController, animated: true)
+       
     }
 }
 

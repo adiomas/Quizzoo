@@ -15,6 +15,7 @@ class QuizViewController: UIViewController  {
     var titleLabel : UILabel!
     var quizImage : UIImageView!
     var startQuizButton : UIButton!
+    var leaderboardsButton : UIButton!
     var questionViews: [QuestionView]! = []
     
     var scrollView : UIScrollView!
@@ -23,11 +24,14 @@ class QuizViewController: UIViewController  {
     var correctAnswers : Int = 0
     var questionsAnswered : Int = 0
     var quizzes : QuizModel? = nil
-    
+    var leaderboardResults : [Results]? = []
+  
     private let resultService = ResultService()
+    private let leaderboardService = LeaderBoardService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
         buildViews()
         createConstraints()
         view.backgroundColor = .white
@@ -43,6 +47,7 @@ class QuizViewController: UIViewController  {
         }
         return nil
     }
+    
     
     func buildViews() {
         titleLabel = UILabel()
@@ -64,6 +69,16 @@ class QuizViewController: UIViewController  {
         startQuizButton.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
         startQuizButton.addTarget(self, action: #selector(onClickStartQuiz(_:)), for: .touchUpInside)
         view.addSubview(startQuizButton)
+        
+        leaderboardsButton = UIButton()
+        leaderboardsButton.autoSetDimensions(to: .init(width: 150, height: 40))
+        leaderboardsButton.setTitle("LEADERBOARD", for: .normal)
+        leaderboardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        leaderboardsButton.layer.cornerRadius = 5
+        leaderboardsButton.layer.borderWidth = 1
+        leaderboardsButton.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
+        leaderboardsButton.addTarget(self, action: #selector(onClickLeaderBoardButton(_:)), for: .touchUpInside)
+        view.addSubview(leaderboardsButton)
         
         scrollView = UIScrollView()
         scrollView.isHidden = true
@@ -101,7 +116,10 @@ class QuizViewController: UIViewController  {
         startQuizButton.autoPinEdge(.top, to: .bottom, of: quizImage, withOffset: 20)
         startQuizButton.autoAlignAxis(.vertical, toSameAxisOf: quizImage)
         
-        scrollView.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 10)
+        leaderboardsButton.autoPinEdge(.top, to: .bottom, of: startQuizButton, withOffset: 20)
+        leaderboardsButton.autoAlignAxis(.vertical, toSameAxisOf: startQuizButton)
+        
+        scrollView.autoPinEdge(.top, to: .bottom, of: leaderboardsButton, withOffset: 10)
         scrollView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
 //        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
@@ -121,6 +139,35 @@ class QuizViewController: UIViewController  {
         
     }
     
+    @objc func onClickLeaderBoardButton(_ sender: UIButton) {
+        guard let quizId = quizzes?.id else { return }
+        leaderboardService.getResults(String(quizId)) { (results) in
+            guard let getLeaderBoardResults = results else { return }
+            
+            self.getTopTwentyResults(results: getLeaderBoardResults)
+            print(self.leaderboardResults!)
+            DispatchQueue.main.async {
+                let vc = LeaderboardController() //change this to your class name
+                vc.results = self.leaderboardResults!
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+    
+    }
+    
+    func getTopTwentyResults(results : [Results]) {
+        var index : Int = 0
+        var counter : Int = 0
+        while counter < 20 {
+            if(results[index].score != nil){
+                counter += 1
+                self.leaderboardResults?.append(results[index])
+            }
+            index += 1
+        }
+    }
+  
+    
     func scrollToAnotherQuestion() {
         let deltax = self.questionViews[0].frame.size.width * CGFloat(questionsAnswered)
         scrollView.setContentOffset(CGPoint(x: deltax, y: 0), animated: true)
@@ -137,6 +184,7 @@ class QuizViewController: UIViewController  {
         DispatchQueue.main.async {
             if (check == 1) {
                 self.navigationController?.popViewController(animated: true)
+                
             } else {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -154,7 +202,7 @@ extension QuizViewController: QuestionViewDelegate {
         }
         if(questionsAnswered < questionViews.count) {
             print("question answered:",questionsAnswered)
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
                 self.scrollToAnotherQuestion()
             }
         } else {

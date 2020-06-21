@@ -134,7 +134,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             defaults.set(id, forKey: "Id")
             print("USPJESNO")
             
-            let vc = ViewController()
+            let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
