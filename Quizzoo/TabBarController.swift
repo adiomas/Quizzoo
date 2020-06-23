@@ -13,14 +13,11 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        let nav1 = generateNavController(vc: ViewController(), title: "QUIZ", image: #imageLiteral(resourceName: "quizes"))
-        let nav2 = generateNavController(vc: ViewController(), title: "Second", image: #imageLiteral(resourceName: "quizes"))
-        let nav3 = generateNavController(vc: ViewController(), title: "Third", image: #imageLiteral(resourceName: "quizes"))
-        
-        UINavigationBar.appearance().prefersLargeTitles = true
+        let nav1 = generateNavController(vc: ViewController(), title: "Quiz", image: #imageLiteral(resourceName: "quizes"))
+        let nav2 = generateNavController(vc: SearchController(), title: "Search", image: #imageLiteral(resourceName: "quizes"))
+        let nav3 = generateNavController(vc: SettingsViewController(), title: "Settings", image: #imageLiteral(resourceName: "quizes"))
+    
         viewControllers = [nav1,nav2,nav3]
-        
-       
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,9 +39,4 @@ class TabBarController: UITabBarController {
         navController.tabBarItem.image = image
         return navController
     }
-    
-    
-
-  
-
 }

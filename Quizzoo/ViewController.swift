@@ -27,8 +27,6 @@ class ViewController: UIViewController{
     
     var questionView: QuestionView!
     
-    var logoutButton: UIButton!
-    
     var tableView = UITableView()
     
     var quizes : [QuizModel]?
@@ -39,11 +37,13 @@ class ViewController: UIViewController{
     
     var tableFooterView : UIView!
     
-
+    var refreshControl: UIRefreshControl!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tabBarController?.tabBar.isHidden = false
+        //        tabBarController?.tabBar.isHidden = false
         buildViews()
         setTableViewDelegates()
         createConstraints()
@@ -51,29 +51,19 @@ class ViewController: UIViewController{
         view.backgroundColor = .white
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden  = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        navigationController?.isNavigationBarHidden  = true
+    //    }
+    //
+    //    override func viewWillDisappear(_ animated: Bool) {
+    //        navigationController?.isNavigationBarHidden = false
+    //    }
     
     func buildViews() {
         view.addSubview(tableView)
         tableView.isHidden = true
         tableView.rowHeight = 100
         tableView.register(QuizzesCell.self, forCellReuseIdentifier: "QuizzesCell")
-        
-        logoutButton = UIButton()
-        logoutButton.setTitle("LOGOUT", for: .normal)
-        logoutButton.setTitleColor(.blue, for: .normal)
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        
-        tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 80))
-        tableFooterView.backgroundColor = UIColor.white
-        tableFooterView.addSubview(logoutButton)
-        tableView.tableFooterView = tableFooterView
         
         funFactLabel = UILabel()
         funFactLabel.text = "Fun fact: "
@@ -109,12 +99,16 @@ class ViewController: UIViewController{
     func setTableViewDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(ViewController.refresh), for: UIControl.Event.valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     func createConstraints() {
         funFactLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 40)
         funFactLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
-               
+        
         numberLabel.autoAlignAxis(.horizontal, toSameAxisOf: funFactLabel)
         numberLabel.autoPinEdge(.leading, to: .trailing, of: funFactLabel, withOffset: 5)
         
@@ -123,8 +117,6 @@ class ViewController: UIViewController{
         tableView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         tableView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         
-        logoutButton.autoPinEdge(.top, to: .top, of: tableFooterView, withOffset: 20)
-        logoutButton.autoAlignAxis(.vertical, toSameAxisOf: tableFooterView)
     }
     
     func getQuizzes() {
@@ -132,9 +124,9 @@ class ViewController: UIViewController{
             guard let getQuiz = quizes else {
                 return
             }
-            self.quizes = getQuiz.quizzes
+            self.quizes = getQuiz
             
-            let ffNumber = getQuiz.quizzes
+            let ffNumber = getQuiz
                 .map{$0.questions}
                 .flatMap{$0.map{$0.question}}
                 .filter { (question) -> Bool in
@@ -152,6 +144,7 @@ class ViewController: UIViewController{
     @objc func refresh(number : Int) {
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
             self.tableView.isHidden = false
             self.numberLabel.text = String(number)
             self.numberLabel.isHidden = false
@@ -191,19 +184,6 @@ class ViewController: UIViewController{
         }
         return quizes[index]
     }
-    
-    
-    @objc func logout() {
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: "accessToken")
-        defaults.removeObject(forKey: "Id")
-//        self.navigationController?.popToRootViewController(animated: true)
-        self.tabBarController?.navigationController?.popToRootViewController(animated: true)
-       
-       
- 
-    }
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -239,7 +219,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         quizViewController.hidesBottomBarWhenPushed = true
         quizViewController.quizzes = quizzes
         navigationController?.pushViewController(quizViewController, animated: true)
-       
+        
     }
 }
 

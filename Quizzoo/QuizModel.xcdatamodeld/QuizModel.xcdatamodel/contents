@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="QuestionModel" representedClassName="QuestionModel" syncable="YES">
+        <attribute name="answers" optional="YES" attributeType="String"/>
+        <attribute name="correctAnswer" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="QuizModel" representedClassName="QuizModel" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="questions" optional="YES" attributeType="Transformable" customClassName="Question"/>
+        <attribute name="quizDescription" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="QuizModel" positionX="-130.0234375" positionY="-60.26953125" width="128" height="133"/>
+        <element name="QuestionModel" positionX="109.140625" positionY="-22.3984375" width="128" height="103"/>
+    </elements>
+</model>

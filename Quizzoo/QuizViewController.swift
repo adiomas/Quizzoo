@@ -202,7 +202,7 @@ extension QuizViewController: QuestionViewDelegate {
         }
         if(questionsAnswered < questionViews.count) {
             print("question answered:",questionsAnswered)
-            Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 self.scrollToAnotherQuestion()
             }
         } else {

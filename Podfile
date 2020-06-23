@@ -7,7 +7,8 @@ target 'Quizzoo' do
 
   # Pods for QuizAppPresenting
   pod 'PureLayout', '~> 3.1'
-  pod 'Kingfisher', '~> 5.13'
+#  pod 'Kingfisher', '~> 5.13'
+  pod 'ReachabilitySwift'
 
 
 end

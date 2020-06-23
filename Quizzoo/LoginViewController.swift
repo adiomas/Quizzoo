@@ -113,11 +113,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         let password = passwordTextField.text
         
         loginService.doLogin(username!,password!){ token,id in
-            self.checkToken(token: token,id: id)
+            self.checkToken(token: token,id: id,username: username!)
         }
     }
     
-    func checkToken(token : String?,id: Int?) {
+    func checkToken(token : String?,id: Int?, username: String?) {
         guard let token = token else {
             DispatchQueue.main.sync{
                 let alert = UIAlertController(title: "Alert", message: "Username or password is incorrect!", preferredStyle: .alert)
@@ -132,6 +132,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             let defaults = UserDefaults.standard
             defaults.set(token, forKey: "accessToken")
             defaults.set(id, forKey: "Id")
+            defaults.set(username, forKey: "username")
             print("USPJESNO")
             
             let vc = TabBarController()

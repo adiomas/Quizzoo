@@ -18,6 +18,8 @@
 		87B0F1AA249F53D600B30AF0 /* LeaderboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0F1A9249F53D600B30AF0 /* LeaderboardCell.swift */; };
 		87B0F1AC249F872700B30AF0 /* LeaderboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0F1AB249F872700B30AF0 /* LeaderboardHeaderView.swift */; };
 		87B0F1AE249F8F0900B30AF0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0F1AD249F8F0900B30AF0 /* SettingsViewController.swift */; };
+		87B0F1B1249FA54500B30AF0 /* QuizModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87B0F1AF249FA54500B30AF0 /* QuizModel.xcdatamodeld */; };
+		87B0F1B3249FF32C00B30AF0 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0F1B2249FF32C00B30AF0 /* SearchController.swift */; };
 		87B52A4D24674E980081BD70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A4C24674E980081BD70 /* AppDelegate.swift */; };
 		87B52A4F24674E980081BD70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A4E24674E980081BD70 /* SceneDelegate.swift */; };
 		87B52A5124674E980081BD70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B52A5024674E980081BD70 /* ViewController.swift */; };
@@ -42,6 +44,8 @@
 		87B0F1A9249F53D600B30AF0 /* LeaderboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardCell.swift; sourceTree = "<group>"; };
 		87B0F1AB249F872700B30AF0 /* LeaderboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardHeaderView.swift; sourceTree = "<group>"; };
 		87B0F1AD249F8F0900B30AF0 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		87B0F1B0249FA54500B30AF0 /* QuizModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuizModel.xcdatamodel; sourceTree = "<group>"; };
+		87B0F1B2249FF32C00B30AF0 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		87B52A4924674E980081BD70 /* Quizzoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quizzoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87B52A4C24674E980081BD70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87B52A4E24674E980081BD70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				87B0F1A9249F53D600B30AF0 /* LeaderboardCell.swift */,
 				87B0F1AB249F872700B30AF0 /* LeaderboardHeaderView.swift */,
 				87B0F1AD249F8F0900B30AF0 /* SettingsViewController.swift */,
+				87B0F1AF249FA54500B30AF0 /* QuizModel.xcdatamodeld */,
+				87B0F1B2249FF32C00B30AF0 /* SearchController.swift */,
 			);
 			path = Quizzoo;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 				875DE2E92468596B00E05641 /* LoginViewController.swift in Sources */,
 				87B52A6224675E920081BD70 /* QuestionView.swift in Sources */,
 				87B52A5124674E980081BD70 /* ViewController.swift in Sources */,
+				87B0F1B3249FF32C00B30AF0 /* SearchController.swift in Sources */,
 				87B52A64246764CE0081BD70 /* QuizService.swift in Sources */,
 				8756B1EA248FCFCA00E0DD21 /* ResultService.swift in Sources */,
 				87B0F1A6249D6E7700B30AF0 /* LeaderBoardService.swift in Sources */,
@@ -284,6 +291,7 @@
 				872AD89F249901CE004C9B05 /* TabBarController.swift in Sources */,
 				875DE2F1246885D600E05641 /* LoginService.swift in Sources */,
 				87FA79872485951F008D9A80 /* QuizzesCell.swift in Sources */,
+				87B0F1B1249FA54500B30AF0 /* QuizModel.xcdatamodeld in Sources */,
 				87B0F1AC249F872700B30AF0 /* LeaderboardHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +503,19 @@
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		87B0F1AF249FA54500B30AF0 /* QuizModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				87B0F1B0249FA54500B30AF0 /* QuizModel.xcdatamodel */,
+			);
+			currentVersion = 87B0F1B0249FA54500B30AF0 /* QuizModel.xcdatamodel */;
+			path = QuizModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 87B52A4124674E980081BD70 /* Project object */;
 }
