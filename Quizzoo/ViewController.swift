@@ -31,9 +31,11 @@ class ViewController: UIViewController{
     
     var quizes : [QuizModel]?
     
+    var quizes1 : [Quiz]?
+    
     private let networkService = QuizService()
     
-    var getQuiz : [ResponseModel]?
+   
     
     var tableFooterView : UIView!
     
@@ -50,6 +52,8 @@ class ViewController: UIViewController{
         getQuizzes()
         view.backgroundColor = .white
     }
+    
+   
     
     //    override func viewWillAppear(_ animated: Bool) {
     //        navigationController?.isNavigationBarHidden  = true
@@ -124,6 +128,7 @@ class ViewController: UIViewController{
             guard let getQuiz = quizes else {
                 return
             }
+           
             self.quizes = getQuiz
             
             let ffNumber = getQuiz

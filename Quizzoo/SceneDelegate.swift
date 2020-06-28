@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let controller = TabBarController()
             let loginController =  LoginViewController()
             let navigationController = UINavigationController(rootViewController: loginController)
-            navigationController.pushViewController(controller, animated: false)
+            navigationController.setViewControllers([loginController, controller], animated: false) 
             return navigationController
         } else {
             let controller =  LoginViewController()

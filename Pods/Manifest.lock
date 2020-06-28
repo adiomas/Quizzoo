@@ -1,20 +1,26 @@
 PODS:
+  - Kingfisher (5.14.0):
+    - Kingfisher/Core (= 5.14.0)
+  - Kingfisher/Core (5.14.0)
   - PureLayout (3.1.6)
   - ReachabilitySwift (5.0.0)
 
 DEPENDENCIES:
+  - Kingfisher (~> 5.13)
   - PureLayout (~> 3.1)
   - ReachabilitySwift
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
     - PureLayout
     - ReachabilitySwift
 
 SPEC CHECKSUMS:
+  Kingfisher: 7b64389a43139c903ec434788344c288217c792d
   PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
 
-PODFILE CHECKSUM: 5df206470c734a5a95c6da9b3680df0672b67285
+PODFILE CHECKSUM: 8961ddc101138308b327b8f5dcc04cd847445693
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

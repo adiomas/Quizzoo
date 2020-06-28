@@ -32,7 +32,17 @@ class QuizService {
             
             do {
                 let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)
-        
+                var lista = [Quiz]()
+                
+                for data in response.quizzes {
+                
+                    let quiz = Quiz.create(quiz: data)
+                    if let quiz = quiz {
+                        lista.append(quiz)
+                    }
+                }
+                
+           
               
                 completionHandler(response.quizzes)
             } catch {
