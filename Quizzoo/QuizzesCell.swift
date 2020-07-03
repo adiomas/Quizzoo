@@ -33,9 +33,9 @@ class QuizzesCell: UITableViewCell {
         fatalError("greska")
     }
     
-    func setup(withQuizzes quiz: QuizModel) {
+    func setup(withQuizzes quiz: Quiz) {
         quizTitle.text = quiz.title!
-        quizDescription.text = quiz.description!
+        quizDescription.text = quiz.quizDescription
         
         if
             let urlString = quiz.image,

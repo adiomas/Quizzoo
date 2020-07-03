@@ -17,33 +17,37 @@ public class Quiz: NSManagedObject {
         return "Quiz"
     }
     
-    class func create(quiz: QuizModel) -> Quiz? {
-        
-        
-        if let quiz1 = Quiz.firstOrCreate(withTitle: quiz.title!) {
-            quiz1.id = Int16(quiz.id)
-            quiz1.category = quiz.category
-            quiz1.title = quiz.title
-            quiz1.image = quiz.image
-            quiz1.level = Int16(quiz.level)
-            quiz1.quizDescription = quiz.description
+    class func createFrom(quizModel: QuizModel) -> Quiz? {
+        if let quiz = Quiz.firstOrCreate(withId: Int(quizModel.id)) {
+            quiz.id = Int16(quizModel.id)
+            quiz.title = quizModel.title
+            quiz.quizDescription = quizModel.description
+            quiz.category = quizModel.category
+            quiz.level = Int16(quizModel.level)
+            quiz.image = quizModel.image
             
-            do {
-                let context = DataController.shared.persistentContainer.viewContext
-                try context.save()
-                return quiz1
-            } catch {
-                print("Failed saving")
+            var questionsSet = Set<Question>()
+            
+            for question in quizModel.questions {
+                guard let question = Question.createFrom(questionModel: question) else { continue }
+                questionsSet.insert(question)
             }
+            
+            quiz.questions = questionsSet
+            
+            DataController.shared.saveContext()
+            return quiz
         }
-        return nil
+        else {
+            return nil
+        }
     }
     
-    class func firstOrCreate(withTitle title: String) -> Quiz? {
+    class func firstOrCreate(withId id: Int) -> Quiz? {
         let context = DataController.shared.persistentContainer.viewContext
         
         let request: NSFetchRequest<Quiz> = Quiz.fetchRequest()
-        request.predicate = NSPredicate(format: "title = %@", title)
+        request.predicate = NSPredicate(format: "id = %@", NSNumber(value: id))
         request.returnsObjectsAsFaults = false
         
         do {

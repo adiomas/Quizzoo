@@ -22,6 +22,6 @@ extension Quiz {
     @NSManaged public var quizDescription: String?
     @NSManaged public var title: String?
     @NSManaged public var id: Int16
-    @NSManaged public var questions: [Question]?
+    @NSManaged public var questions: Set<Question>?
 
 }

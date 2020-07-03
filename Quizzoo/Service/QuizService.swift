@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import Reachability
 
 class QuizService {
     
@@ -16,43 +17,48 @@ class QuizService {
     private let session = URLSession.shared
     private let jsonDecoder = JSONDecoder()
     
-    func getQuizzes(completionHandler: @escaping ([QuizModel]?) -> Void) -> Void {
-        guard let url = URL(string: apiString) else { return }
+    func getQuizzes(completionHandler: @escaping (([Quiz]?) -> Void)) {
+        let reachability = try! Reachability()
         
-        let task = session.dataTask(with: url) { (data, _ , error) in
-            if error != nil {
-                print("POGREŠKA")
-                completionHandler(nil)
-                return
-            }
-            guard let jsonData = data else {
-                completionHandler(nil)
-                return
-            }
+        if reachability.connection == .unavailable {
+            let quizzes = DataController.shared.fetchQuizes()
+            completionHandler(quizzes)
+        } else {
             
-            do {
-                let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)
-                var lista = [Quiz]()
-                
-                for data in response.quizzes {
-                
-                    let quiz = Quiz.create(quiz: data)
-                    if let quiz = quiz {
-                        lista.append(quiz)
-                    }
+            guard let url = URL(string: apiString) else { return }
+            
+            let task = session.dataTask(with: url) { (data, _ , error) in
+                if error != nil {
+                    print("POGREŠKA")
+                    completionHandler(nil)
+                    return
+                }
+                guard let jsonData = data else {
+                    completionHandler(nil)
+                    return
                 }
                 
-           
-              
-                completionHandler(response.quizzes)
-            } catch {
-                print("POGREKA")
-                completionHandler(nil)
-                return
+                do {
+                    let response = try self.jsonDecoder.decode(ResponseModel.self, from: jsonData)
+                    var lista = [Quiz]()
+                    print(response.quizzes)
+                    for data in response.quizzes {
+                        let quiz = Quiz.createFrom(quizModel: data)
+                        if let quiz = quiz {
+                            lista.append(quiz)
+                        }
+                    }
+                    completionHandler(lista)
+                } catch {
+                    print("POGREŠKA")
+                    completionHandler(nil)
+                    return
+                }
+                
             }
+            task.resume()
             
         }
-        task.resume()
     }
 }
 

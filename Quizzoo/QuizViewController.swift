@@ -23,7 +23,7 @@ class QuizViewController: UIViewController  {
     var timer : Date!
     var correctAnswers : Int = 0
     var questionsAnswered : Int = 0
-    var quizzes : QuizModel? = nil
+    var quizzes : Quiz? = nil
     var leaderboardResults : [Results]? = []
   
     private let resultService = ResultService()
@@ -92,11 +92,13 @@ class QuizViewController: UIViewController  {
         
         scrollView.addSubview(questionsStackView)
         
-        guard let counter = quizzes?.questions.count else { return }
-        
-        for i in 0..<counter {
+        guard let counter = quizzes?.questions?.count else { return }
+        guard let questions : Set<Question> = quizzes?.questions else { return }
+        let a = Array(questions)
+        for i in 0..<a.count {
+            let questionIndex = questions.index(questions.startIndex, offsetBy: i)
             questionViews.append(QuestionView())
-            questionViews[i].setQuestion(questionModel: (quizzes?.questions[i])!)
+            questionViews[i].setQuestion(questionModel: questions[questionIndex])
             questionViews[i].delegate = self
             questionsStackView.addArrangedSubview(questionViews[i])
         }
@@ -124,7 +126,7 @@ class QuizViewController: UIViewController  {
 //        scrollView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         
-        guard let counter = quizzes?.questions.count else { return }
+        guard let counter = quizzes?.questions?.count else { return }
         
         for i in 0..<counter{
             questionViews[i].autoMatch(.width, to: .width, of: view)
@@ -208,7 +210,7 @@ extension QuizViewController: QuestionViewDelegate {
         } else {
             let duration = Double(Date().timeIntervalSince(timer))
             guard let quizId = quizzes?.id else { return }
-            sendResultsToService(quizId: quizId, userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
+            sendResultsToService(quizId: Int(quizId), userId: UserDefaults.standard.value(forKey: "Id")! as! Int, duration: duration, correctAnswers: correctAnswers)
         }
     }
     

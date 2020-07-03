@@ -13,8 +13,8 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        let nav1 = generateNavController(vc: ViewController(), title: "Quiz", image: #imageLiteral(resourceName: "quizes"))
-        let nav2 = generateNavController(vc: SearchController(), title: "Search", image: #imageLiteral(resourceName: "quizes"))
+        let nav1 = generateNavController(vc: ViewController(viewModel: QuizViewModel()), title: "Quiz", image: #imageLiteral(resourceName: "quizes"))
+        let nav2 = generateNavController(vc: SearchController(viewModel: QuizViewModel()), title: "Search", image: #imageLiteral(resourceName: "quizes"))
         let nav3 = generateNavController(vc: SettingsViewController(), title: "Settings", image: #imageLiteral(resourceName: "quizes"))
     
         viewControllers = [nav1,nav2,nav3]

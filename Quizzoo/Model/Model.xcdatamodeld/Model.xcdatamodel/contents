@@ -5,7 +5,6 @@
         <attribute name="correctAnswer" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="question" optional="YES" attributeType="String"/>
-        <relationship name="quiz" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Quiz" inverseName="questions" inverseEntity="Quiz"/>
     </entity>
     <entity name="Quiz" representedClassName="Quiz" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String"/>
@@ -14,10 +13,10 @@
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quizDescription" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="questions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Question" inverseName="quiz" inverseEntity="Question"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Question"/>
     </entity>
     <elements>
-        <element name="Question" positionX="-45" positionY="0" width="128" height="28"/>
-        <element name="Quiz" positionX="-18" positionY="27" width="128" height="28"/>
+        <element name="Question" positionX="-45" positionY="0" width="128" height="103"/>
+        <element name="Quiz" positionX="-18" positionY="27" width="128" height="148"/>
     </elements>
 </model>

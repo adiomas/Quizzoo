@@ -38,22 +38,22 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 2.1, animations: {
+        UIView.animate(withDuration: 1.45, animations: {
             self.quizNameLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.quizNameLabel.alpha = 1
         }) { _ in
         }
-        UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 1, delay: 0.15, options: .curveEaseInOut, animations: {
             self.usernameTextField.transform = CGAffineTransform.identity
             self.usernameTextField.alpha = 1
         }) { _ in
         }
-        UIView.animate(withDuration: 1.5, delay: 0.35, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 1, delay: 0.30, options: .curveEaseInOut, animations: {
             self.passwordTextField.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.passwordTextField.alpha = 1
         }) { _ in
         }
-        UIView.animate(withDuration: 1.5, delay: 0.60, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 1, delay: 0.45, options: .curveEaseInOut, animations: {
             self.loginButton.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.loginButton.alpha = 1
         }) { _ in

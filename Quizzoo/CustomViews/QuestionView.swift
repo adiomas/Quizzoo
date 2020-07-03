@@ -31,12 +31,12 @@ class QuestionView: UIView {
     
     var answersStackView: UIStackView!
     
-    var questionModel: QuestionModel?
+    var questionModel: Question?
     
     @objc
     func checkAnswer(_ sender: UIButton){
-        guard let correctAnswer = questionModel?.correct_answer else { return }
-        answerButtons[correctAnswer].backgroundColor = .green
+        guard let correctAnswer = questionModel?.correctAnswer else { return }
+        answerButtons[Int(correctAnswer)].backgroundColor = .green
         if (correctAnswer == sender.tag) {
             answer += 1
         }else {
@@ -112,20 +112,20 @@ class QuestionView: UIView {
         answersStackView.autoPinEdge(.top, to: .bottom, of: questionLabel, withOffset: 10)
     }
     
-    func setQuestion(questionModel: QuestionModel) {
+    func setQuestion(questionModel: Question) {
         self.questionModel = questionModel
         self.questionLabel.text = questionModel.question
         
-        for i in 0..<questionModel.answers.count {
+        for i in 0..<questionModel.getAnswersAsArray().count {
             switch i {
             case 0:
-                answer1Button.setTitle(questionModel.answers[i], for: .normal)
+                answer1Button.setTitle(questionModel.getAnswersAsArray()[i], for: .normal)
             case 1:
-                answer2Button.setTitle(questionModel.answers[i], for: .normal)
+                answer2Button.setTitle(questionModel.getAnswersAsArray()[i], for: .normal)
             case 2:
-                answer3Button.setTitle(questionModel.answers[i], for: .normal)
+                answer3Button.setTitle(questionModel.getAnswersAsArray()[i], for: .normal)
             case 3:
-                answer4Button.setTitle(questionModel.answers[i], for: .normal)
+                answer4Button.setTitle(questionModel.getAnswersAsArray()[i], for: .normal)
             default:
                 print("NEBI SE TREBALO DESITI!")
             }

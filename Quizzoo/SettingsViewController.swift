@@ -37,8 +37,7 @@ class SettingsViewController: UIViewController {
         logoutButton.autoSetDimensions(to: .init(width: 150, height: 35))
         logoutButton.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
         logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        view.addSubview(logoutButton)
-        
+        view.addSubview(logoutButton) 
     }
     
     func createConstraints() {
@@ -57,10 +56,5 @@ class SettingsViewController: UIViewController {
         defaults.removeObject(forKey: "username")
         //        self.navigationController?.popToRootViewController(animated: true)
         self.tabBarController?.navigationController?.popToRootViewController(animated: true)
-        
-        
-        
     }
-    
-    
 }

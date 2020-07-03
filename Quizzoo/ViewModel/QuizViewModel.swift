@@ -14,7 +14,7 @@ import CoreData
 // Struktura koja sluzi da se ReviewTableViewCell napuni njenim podacima
 struct QuizCellModel  {
     
-   let id: Int16
+    let id: Int16
     let title, quizDescription, category: String?
     let level: Int16
     let image: String?
@@ -27,35 +27,40 @@ struct QuizCellModel  {
         self.category = quiz.category ?? ""
         self.level = quiz.level
         self.image = quiz.image ?? ""
-        self.questions = quiz.questions ?? []
+        self.questions = Array(quiz.questions ?? [])
     }
 }
 
 class QuizViewModel {
     
     var quizes: [Quiz]?
-    var quizes1: [QuizModel]?
     
-func fetchQuizes(completion: @escaping (([Quiz]?) -> Void)) -> Void {
-
-    QuizService().getQuizzes() { [weak self] (quizes)  in
-            print(quizes)
-            self?.quizes = DataController.shared.fetchQuizes()
+    
+    func fetchQuizes(completionHandler: @escaping ([Quiz]?) -> Void)   {
         
-            completion(self?.quizes)
+        QuizService().getQuizzes { [weak self] (quizes)  in
+            self?.quizes = quizes
+            completionHandler(self?.quizes)
         }
-}
+    }
     
-    func quiz(atIndex index: Int) -> QuizCellModel? {
-          guard let quizes = quizes else {
-              return nil
-          }
-
-        let quizCellModel = QuizCellModel(quiz: quizes[index])
-          return quizCellModel
-      }
-
-      func numberOfReviews() -> Int {
-          return quizes?.count ?? 0
-      }
+    func getNumber() -> Int {
+        var array = [Question]()
+        guard let quizes = quizes else { return 0 }
+        for quiz in quizes {
+            array.append(contentsOf: Array(quiz.questions!))
+        }
+        
+        let a = array.map{$0.question}
+            .filter{ (question) -> Bool in return(question?.contains("NBA"))!}
+            .count
+        return a
+    }
+    
+    func searchQuizes(searchBy: String, completion: @escaping ([Quiz]?) -> Void) {
+        self.quizes = DataController.shared.searchQuizes(searchBy: searchBy)
+        
+        
+        completion(self.quizes)
+    }
 }

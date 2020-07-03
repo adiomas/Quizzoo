@@ -29,19 +29,20 @@ class ViewController: UIViewController{
     
     var tableView = UITableView()
     
-    var quizes : [QuizModel]?
+    var quizViewModel : QuizViewModel!
     
-    var quizes1 : [Quiz]?
+    var quizes : [Quiz]?
     
     private let networkService = QuizService()
-    
-   
     
     var tableFooterView : UIView!
     
     var refreshControl: UIRefreshControl!
     
-    
+    convenience init(viewModel: QuizViewModel) {
+        self.init()
+        self.quizViewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,16 +53,6 @@ class ViewController: UIViewController{
         getQuizzes()
         view.backgroundColor = .white
     }
-    
-   
-    
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        navigationController?.isNavigationBarHidden  = true
-    //    }
-    //
-    //    override func viewWillDisappear(_ animated: Bool) {
-    //        navigationController?.isNavigationBarHidden = false
-    //    }
     
     func buildViews() {
         view.addSubview(tableView)
@@ -124,27 +115,13 @@ class ViewController: UIViewController{
     }
     
     func getQuizzes() {
-        networkService.getQuizzes() {  (quizes) in
-            guard let getQuiz = quizes else {
-                return
-            }
-           
-            self.quizes = getQuiz
-            
-            let ffNumber = getQuiz
-                .map{$0.questions}
-                .flatMap{$0.map{$0.question}}
-                .filter { (question) -> Bool in
-                    return question.contains("NBA")
-            }
-            .count
-            self.refresh(number: ffNumber)
-            print(self.headerTitles())
+        quizViewModel.fetchQuizes { quizes in
+            guard let getQuizes = quizes else { return }
+            print("BRRROOJJ", self.quizViewModel.getNumber())
+            self.quizes = getQuizes
+            self.refresh(number: self.quizViewModel.getNumber())
         }
-        
     }
-    
-    
     
     @objc func refresh(number : Int) {
         DispatchQueue.main.async {
@@ -162,7 +139,8 @@ class ViewController: UIViewController{
         
     }
     
-    func sectionArrays() -> [[QuizModel]] {
+    func sectionArrays() -> [[Quiz]] {
+        
         let sportCategory = quizes?.filter{(quiz) -> Bool in return (quiz.category?.contains("SPORTS"))!}
         let scienceCategory = quizes?.filter{(quiz) -> Bool in return (quiz.category?.contains("SCIENCE"))!}
         return [sportCategory!,scienceCategory!]
@@ -173,7 +151,7 @@ class ViewController: UIViewController{
     }
     
     
-    func quizzes(atIndex index: Int) -> QuizModel? {
+    func quizzes(atIndex index: Int) -> Quiz? {
         guard let quizes = quizes else {
             DispatchQueue.main.sync {
                 let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
@@ -241,3 +219,4 @@ extension Array where Element: Hashable {
         self = self.removingDuplicates()
     }
 }
+

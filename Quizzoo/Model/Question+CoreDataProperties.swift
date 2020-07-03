@@ -17,9 +17,14 @@ extension Question {
     }
 
     @NSManaged public var correctAnswer: Int16
-    @NSManaged public var answers: [String]?
+    @NSManaged public var answers: String?
     @NSManaged public var question: String?
     @NSManaged public var id: Int16
-    @NSManaged public var quiz: Quiz?
+ 
+    func getAnswersAsArray() -> [String] {
+           let answersAsData = answers!.data(using: String.Encoding.utf16)
+           let answersArray: [String] = try! JSONDecoder().decode([String].self, from: answersAsData!)
+           return answersArray
+       }
 
 }
