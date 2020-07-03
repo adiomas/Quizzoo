@@ -44,23 +44,21 @@ class QuizViewModel {
         }
     }
     
-    func getNumber() -> Int {
-        var array = [Question]()
-        guard let quizes = quizes else { return 0 }
-        for quiz in quizes {
-            array.append(contentsOf: Array(quiz.questions!))
-        }
-        
-        let a = array.map{$0.question}
-            .filter{ (question) -> Bool in return(question?.contains("NBA"))!}
-            .count
-        return a
-    }
+//    func getNumber() -> Int {
+//        var array = [Question]()
+//        guard let quizes = quizes else { return 0 }
+//        for quiz in quizes {
+//            array.append(contentsOf: Array(quiz.questions!))
+//        }
+//
+//        let a = array.map{$0.question}
+//            .filter{ (question) -> Bool in return(question?.contains("NBA"))!}
+//            .count
+//        return a
+//    }
     
     func searchQuizes(searchBy: String, completion: @escaping ([Quiz]?) -> Void) {
         self.quizes = DataController.shared.searchQuizes(searchBy: searchBy)
-        
-        
         completion(self.quizes)
     }
 }

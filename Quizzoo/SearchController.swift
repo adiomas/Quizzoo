@@ -16,6 +16,8 @@ class SearchController: UIViewController {
     
     var tableView = UITableView()
     
+    var searchAgainButton : UIButton!
+    
     var quizViewModel: QuizViewModel!
     
     var refreshControl: UIRefreshControl!
@@ -59,7 +61,9 @@ class SearchController: UIViewController {
         searchButton.backgroundColor = UIColor(red: 0.3451, green: 0.6627, blue: 0.9373, alpha: 1.0)
         searchButton.addTarget(self, action: #selector(onClickSearch(_:)), for: .touchUpInside)
         view.addSubview(searchButton)
+        
     }
+
     
     func setTableViewDelegates() {
         tableView.delegate = self
@@ -75,6 +79,7 @@ class SearchController: UIViewController {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
             self.tableView.isHidden = false
+        
         }
     }
     
@@ -92,6 +97,7 @@ class SearchController: UIViewController {
         tableView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         tableView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
         
+        
     }
     
     @objc func onClickSearch(_ sender: UIButton) {
@@ -99,11 +105,15 @@ class SearchController: UIViewController {
         quizViewModel.searchQuizes(searchBy: searchBy ?? "") { quizes in
             guard let getQuizes = quizes else { return }
             self.quizes = getQuizes
-            print("BBBBBBBB",self.quizes)
+            guard let check = self.quizes?.isEmpty else { return }
+            if (check) {
+                print("ništa")
+            } else {
             self.refresh()
+            }
         }
     }
-    
+
     func sectionArrays() -> [[Quiz]] {
         
         let sportCategory = quizes?.filter{(quiz) -> Bool in return (quiz.category?.contains("SPORTS"))!}
@@ -119,9 +129,6 @@ class SearchController: UIViewController {
         return quizes?.map{$0.category}.removingDuplicates().count ?? 0
         
     }
-    
-    
-    
 }
 
 extension SearchController: UITableViewDelegate, UITableViewDataSource {
@@ -157,4 +164,5 @@ extension SearchController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(quizViewController, animated: true)
         
     }
+    
 }

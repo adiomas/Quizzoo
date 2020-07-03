@@ -49,12 +49,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         }) { _ in
         }
         UIView.animate(withDuration: 1, delay: 0.30, options: .curveEaseInOut, animations: {
-            self.passwordTextField.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.passwordTextField.transform = CGAffineTransform.identity
             self.passwordTextField.alpha = 1
         }) { _ in
         }
         UIView.animate(withDuration: 1, delay: 0.45, options: .curveEaseInOut, animations: {
-            self.loginButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.loginButton.transform = CGAffineTransform.identity
             self.loginButton.alpha = 1
         }) { _ in
         }
@@ -184,6 +184,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             return
         }
         
+       
+        
         DispatchQueue.main.sync{
             
             
@@ -192,7 +194,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             defaults.set(id, forKey: "Id")
             defaults.set(username, forKey: "username")
             print("USPJESNO")
-            
+           
             let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
         }

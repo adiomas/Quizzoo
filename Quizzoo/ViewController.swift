@@ -60,15 +60,15 @@ class ViewController: UIViewController{
         tableView.rowHeight = 100
         tableView.register(QuizzesCell.self, forCellReuseIdentifier: "QuizzesCell")
         
-        funFactLabel = UILabel()
-        funFactLabel.text = "Fun fact: "
-        funFactLabel.isHidden = true
-        view.addSubview(funFactLabel)
-        
-        numberLabel = UILabel()
-        numberLabel.text = "0"
-        numberLabel.isHidden = true
-        view.addSubview(numberLabel)
+//        funFactLabel = UILabel()
+//        funFactLabel.text = "Fun fact: "
+//        funFactLabel.isHidden = true
+//        view.addSubview(funFactLabel)
+//
+//        numberLabel = UILabel()
+//        numberLabel.text = "0"
+//        numberLabel.isHidden = true
+//        view.addSubview(numberLabel)
         
         quizNameLabel = UILabel()
         quizNameLabel.text = "BLABla"
@@ -101,13 +101,9 @@ class ViewController: UIViewController{
     }
     
     func createConstraints() {
-        funFactLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 40)
-        funFactLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 15)
+
         
-        numberLabel.autoAlignAxis(.horizontal, toSameAxisOf: funFactLabel)
-        numberLabel.autoPinEdge(.leading, to: .trailing, of: funFactLabel, withOffset: 5)
-        
-        tableView.autoPinEdge(.top, to: .bottom, of: funFactLabel, withOffset: 10)
+        tableView.autoPinEdge(toSuperviewEdge: .top, withInset: 40)
         tableView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
         tableView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
         tableView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
@@ -117,20 +113,18 @@ class ViewController: UIViewController{
     func getQuizzes() {
         quizViewModel.fetchQuizes { quizes in
             guard let getQuizes = quizes else { return }
-            print("BRRROOJJ", self.quizViewModel.getNumber())
+           
             self.quizes = getQuizes
-            self.refresh(number: self.quizViewModel.getNumber())
+            self.refresh()
         }
     }
     
-    @objc func refresh(number : Int) {
+    @objc func refresh() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
             self.tableView.isHidden = false
-            self.numberLabel.text = String(number)
-            self.numberLabel.isHidden = false
-            self.funFactLabel.isHidden = false
+           
         }
     }
     
@@ -148,24 +142,6 @@ class ViewController: UIViewController{
     
     func headerTitles() -> [String?]{
         return (quizes?.map{$0.category}.removingDuplicates())!
-    }
-    
-    
-    func quizzes(atIndex index: Int) -> Quiz? {
-        guard let quizes = quizes else {
-            DispatchQueue.main.sync {
-                let alert = UIAlertController(title: "Alert", message: "Something went wrong", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(ok)
-                present(alert,animated: true,completion:nil)
-            }
-            return nil
-        }
-        if(index == quizes.count) {
-            return nil
-            
-        }
-        return quizes[index]
     }
 }
 

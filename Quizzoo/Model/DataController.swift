@@ -41,7 +41,6 @@ class DataController {
         let request: NSFetchRequest<Quiz> = Quiz.fetchRequest()
         
         request.predicate = NSPredicate(format: "title CONTAINS[c] %@ OR quizDescription CONTAINS[c] %@", searchBy, searchBy)
-        request.sortDescriptors = [NSSortDescriptor(key: "category", ascending: true)]
         let context = DataController.shared.persistentContainer.viewContext
         
         let quizes = try? context.fetch(request)
