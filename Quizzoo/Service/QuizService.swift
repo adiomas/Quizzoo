@@ -15,7 +15,7 @@ class QuizService {
     private let session = URLSession.shared
     private let jsonDecoder = JSONDecoder()
     
-    func getQuizzes(completionHandler: @escaping (ResponseModel?) -> Void){
+    func getQuizzes(completionHandler: @escaping (ResponseModel?) -> Void) -> Void {
         guard let url = URL(string: apiString) else { return }
         
         let task = session.dataTask(with: url) { (data, _ , error) in
@@ -45,9 +45,9 @@ class QuizService {
 
 struct QuizModel: Codable {
     let id: Int
-    let title, description, category: String
+    let title, description, category: String?
     let level: Int
-    let image: String
+    let image: String?
     let questions: [QuestionModel]
 }
 

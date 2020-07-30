@@ -13,7 +13,7 @@ class LoginService {
     private let apiString = "https://iosquiz.herokuapp.com/api/session"
     private let session = URLSession.shared
     
-    func doLogin(_ username: String, _ password: String, completionHandler: @escaping (String?) -> Void) {
+    func doLogin(_ username: String, _ password: String, completionHandler: @escaping (String?,Int?) -> Void) {
         guard let url = URL(string: apiString) else { return }
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
@@ -26,12 +26,12 @@ class LoginService {
             
             if error != nil {
                 print("POGREŠKA")
-                completionHandler(nil)
+                completionHandler(nil,nil)
                 return
             }
             
             guard let jsonData = data else {
-                completionHandler(nil)
+                completionHandler(nil,nil)
                 return
                 
             }
@@ -39,10 +39,11 @@ class LoginService {
             do {
                 let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
                 guard let server_response = json as? NSDictionary else { return }
-                completionHandler(server_response["token"] as? String)
+                print(server_response)
+                completionHandler(server_response["token"] as? String,server_response["user_id"] as? Int)
             } catch {
                 print("Pogreška")
-                completionHandler(nil)
+                completionHandler(nil,nil)
                 return
             }
         }
